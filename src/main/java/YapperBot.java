@@ -46,9 +46,10 @@ public class YapperBot {
             }
         });
 
+
         // main loop
+        System.out.println(greeting);
         while (true) {
-            System.out.print("You: ");
             String userInput = sc.nextLine();
 
             if (Objects.equals(userInput, "bye")) {
@@ -69,8 +70,8 @@ public class YapperBot {
                     }
                 }
                 if (!matched) {
-                    previous.add(new Task(userInput));
-                    System.out.println("added: " + userInput);
+                    //Error handling
+                    sc.close();
                 }
             }
         }
