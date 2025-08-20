@@ -1,7 +1,4 @@
-# Duke User Guide
-
-// Update the title above to match the actual product name
-
+# YapperBot User Guide
 // Product screenshot goes here
 
 // Product intro goes here
