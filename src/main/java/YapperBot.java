@@ -1,6 +1,6 @@
 public class YapperBot {
     public static void main(String[] args) {
-        String logo = """
+        String greeting = """
                 --------------------------------
                 Hello! I'm YapperBot
                 What can I do for you?
@@ -8,6 +8,6 @@ public class YapperBot {
                 Bye. Hope to see you again soon!
                 --------------------------------
                 """;
-        System.out.println("Hello from\n" + logo);
+        System.out.println(greeting);
     }
 }
