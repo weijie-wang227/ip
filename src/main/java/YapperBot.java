@@ -46,6 +46,34 @@ public class YapperBot {
             }
         });
 
+        //todo
+        commands.put(Pattern.compile("^todo(?:\\s+(.*))?$"), matcher -> {
+            String desc = matcher.group(1);
+            Task task = new Todo(desc);
+            previous.add(task);
+            System.out.println(task.forDisplay(previous.size()));
+        });
+
+        //deadline
+        commands.put(Pattern.compile("^deadline\\s+(.+?)\\s*/by\\s+(.+)$"), matcher -> {
+            String desc = matcher.group(1);
+            String end = matcher.group(2);
+            Task task = new Deadline(desc, end);
+            previous.add(task);
+            System.out.println(task.forDisplay(previous.size()));
+        });
+
+        //event
+        commands.put(Pattern.compile("^event\\s+(.+?)\\s*/from\\s+(.+?)\\s*/to\\s+(.+)$"), matcher -> {
+            String desc = matcher.group(1);
+            String start = matcher.group(2);
+            String end = matcher.group(3);
+            Task task = new Event(desc, start, end);
+            previous.add(task);
+            System.out.println(task.forDisplay(previous.size()));
+
+        });
+
 
         // main loop
         System.out.println(greeting);

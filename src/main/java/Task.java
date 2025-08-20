@@ -26,4 +26,10 @@ public abstract class Task
             return "[ ] " + description;
         }
     }
+
+    public String forDisplay(int size) {
+        return "Got it. I've added this task:\n  " +
+                toString() +
+                "\nNow you have " + size + " in the list";
+    }
 }
