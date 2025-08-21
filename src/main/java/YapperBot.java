@@ -19,10 +19,15 @@ public class YapperBot {
         Map<Pattern, Consumer<Matcher>> commands = new LinkedHashMap<>();
 
         // mark command
-        commands.put(Pattern.compile("^mark\\s+(\\d+)$"), matcher -> {
-            int index = Integer.parseInt(matcher.group(1)) - 1;
+        commands.put(Pattern.compile("^mark(?:\\s+(\\d+))?$"
+        ), matcher -> {
+            String digit = matcher.group(1);
+            if (digit == null) {
+                throw new InvalidInputException("OOPS!!! The index cannot be empty");
+            }
+            int index = Integer.parseInt(digit) - 1;
             if (index >= previous.size() || index < 0) {
-                System.out.println("Index out of range");
+                throw new InvalidInputException("OOPS!!! The index is out of range");
             } else {
                 Task task = previous.get(index);
                 task.mark();
@@ -33,9 +38,13 @@ public class YapperBot {
 
         // unmark command
         commands.put(Pattern.compile("^unmark\\s+(\\d+)$"), matcher -> {
-            int index = Integer.parseInt(matcher.group(1)) - 1;
+            String digit = matcher.group(1);
+            if (digit == null) {
+                throw new InvalidInputException("OOPS!!! The index cannot be empty");
+            }
+            int index = Integer.parseInt(digit) - 1;
             if (index >= previous.size() || index < 0) {
-                System.out.println("Index out of range");
+                throw new InvalidInputException("OOPS!!! The index is out of range");
             } else {
                 Task task = previous.get(index);
                 task.unmark();
