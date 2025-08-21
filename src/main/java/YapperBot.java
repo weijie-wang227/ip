@@ -6,17 +6,15 @@ import java.util.regex.*;
 public class YapperBot {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String greeting = """
-                --------------------------------
-                Hello! I'm YapperBot
-                What can I do for you?
-                --------------------------------
-                """;
-        String exitMessage = """
-                --------------------------------
-                Bye. Hope to see you again soon!
-                --------------------------------
-                """;
+        String greeting =
+                "--------------------------------\n" +
+                "Hello! I'm YapperBot\n" +
+                "What can I do for you?\n" +
+                "--------------------------------";
+        String exitMessage =
+                "--------------------------------\n" +
+                "Bye. Hope to see you again soon!\n" +
+                "--------------------------------";
         List<Task> previous = new ArrayList<>();
         Map<Pattern, Consumer<Matcher>> commands = new LinkedHashMap<>();
 
