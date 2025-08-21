@@ -48,24 +48,34 @@ public class YapperBot {
         commands.put(Pattern.compile("^todo(?:\\s+(.*))?$"), matcher -> {
             String desc = matcher.group(1);
             Task task = new Todo(desc);
+            if (desc == null) {
+                throw new InvalidInputException("OOPS!!! The description of a todo cannot be empty");
+            }
             previous.add(task);
             System.out.println(task.forDisplay(previous.size()));
         });
 
         //deadline
-        commands.put(Pattern.compile("^deadline\\s+(.+?)\\s*/by\\s+(.+)$"), matcher -> {
+        commands.put(Pattern.compile("^deadline(?:\\s+(.+?))?(?:\\s*/by\\s+(.+))?$"
+        ), matcher -> {
             String desc = matcher.group(1);
             String end = matcher.group(2);
+            if (desc == null|| end == null) {
+                throw new InvalidInputException("OOPS!!! A deadline task has to have both a description and end date");
+            }
             Task task = new Deadline(desc, end);
             previous.add(task);
             System.out.println(task.forDisplay(previous.size()));
         });
 
         //event
-        commands.put(Pattern.compile("^event\\s+(.+?)\\s*/from\\s+(.+?)\\s*/to\\s+(.+)$"), matcher -> {
+        commands.put(Pattern.compile("^event(?:\\s+(.+?))?(?:\\s*/from\\s+(.+?))?(?:\\s*/to\\s+(.+))?$"), matcher -> {
             String desc = matcher.group(1);
             String start = matcher.group(2);
             String end = matcher.group(3);
+            if (desc == null || start == null || end == null) {
+                throw new InvalidInputException("OOPS!!! A event has to have a description, a start date and an end date");
+            }
             Task task = new Event(desc, start, end);
             previous.add(task);
             System.out.println(task.forDisplay(previous.size()));
@@ -86,21 +96,28 @@ public class YapperBot {
                     System.out.println((i + 1) + ", " + previous.get(i));
                 }
             } else {
-                boolean matched = false;
-                for (Map.Entry<Pattern, Consumer<Matcher>> entry : commands.entrySet()) {
-                    Matcher matcher = entry.getKey().matcher(userInput);
-                    if (matcher.matches()) {
-                        entry.getValue().accept(matcher);
-                        matched = true;
-                        break;
-                    }
-                }
-                if (!matched) {
-                    //Error handling
-                    sc.close();
+                try {
+                    processInput(userInput, commands);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }
         sc.close();
+    }
+
+    public static void processInput(String userInput, Map<Pattern, Consumer<Matcher>> commands) {
+        boolean matched = false;
+        for (Map.Entry<Pattern, Consumer<Matcher>> entry : commands.entrySet()) {
+            Matcher matcher = entry.getKey().matcher(userInput);
+            if (matcher.matches()) {
+                entry.getValue().accept(matcher);
+                matched = true;
+                break;
+            }
+        }
+        if (!matched) {
+            throw new InvalidInputException();
+        }
     }
 }
