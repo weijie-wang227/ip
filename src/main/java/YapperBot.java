@@ -53,6 +53,23 @@ public class YapperBot {
             }
         });
 
+        // delete command
+        commands.put(Pattern.compile("^delete\\s+(\\d+)$"), matcher -> {
+            String digit = matcher.group(1);
+            if (digit == null) {
+                throw new InvalidInputException("OOPS!!! The index cannot be empty");
+            }
+            int index = Integer.parseInt(digit) - 1;
+            if (index >= previous.size() || index < 0) {
+                throw new InvalidInputException("OOPS!!! The index is out of range");
+            } else {
+                Task task = previous.get(index);
+                previous.remove(index);
+                System.out.println("Ok, I've removed this task");
+                System.out.println(task.deleteMessage(previous.size()));
+            }
+        });
+
         //todo
         commands.put(Pattern.compile("^todo(?:\\s+(.*))?$"), matcher -> {
             String desc = matcher.group(1);

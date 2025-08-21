@@ -16,7 +16,7 @@ Nice! I've marked this task as done:
 1, [T][ ] borrow book
 2, [D][X] return book (by: Sunday)
 3, [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-Index out of range
+OOPS!!! The index is out of range
 Got it. I've added this task:
   [T][ ] join sports club
 Now you have 4 in the list

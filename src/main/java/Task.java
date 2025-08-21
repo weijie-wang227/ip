@@ -32,4 +32,10 @@ public abstract class Task
                 toString() +
                 "\nNow you have " + size + " in the list";
     }
+
+    public String deleteMessage(int size) {
+        return "Noted. I've removed this task:\n  " +
+                toString() +
+                "\nNow you have " + size + " in the list";
+    }
 }
