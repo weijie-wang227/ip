@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.*;
@@ -5,6 +7,8 @@ import java.util.function.Consumer;
 import java.util.regex.*;
 public class YapperBot {
     public static void main(String[] args) {
+        initData();
+
         Scanner sc = new Scanner(System.in);
         String greeting =
                 "--------------------------------\n" +
@@ -145,5 +149,37 @@ public class YapperBot {
         if (!matched) {
             throw new InvalidInputException();
         }
+    }
+
+    public static void initData() {
+        String dirName = "data";
+        String fileName = "data/YapperBot.txt";
+
+        File dir = new File(dirName);
+        if (!dir.exists()) {
+            if (dir.mkdir()) {
+                System.out.println("Directory created: " + dirName);
+            } else {
+                System.out.println("Failed to create directory: " + dirName);
+                return;
+            }
+        }
+
+        // Create file if it doesn't exist and write to it
+        File file = new File(fileName);
+        try
+        {
+            if (file.createNewFile()) {
+                System.out.println("Save File created: " + dirName);
+            } else {
+                System.out.println("Save File already exits");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveData(List<Task> list) {
+
     }
 }
