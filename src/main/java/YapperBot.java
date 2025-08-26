@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -7,7 +8,7 @@ import java.util.function.Consumer;
 import java.util.regex.*;
 public class YapperBot {
     public static void main(String[] args) {
-        initData();
+        String fileName = initData();
 
         Scanner sc = new Scanner(System.in);
         String greeting =
@@ -127,7 +128,7 @@ public class YapperBot {
                 }
             } else {
                 try {
-                    processInput(userInput, commands);
+                    processInput(userInput, commands, fileName, previous);
                 } catch (InvalidInputException e) {
                     System.out.println(e.getMessage());
                 }
@@ -136,12 +137,14 @@ public class YapperBot {
         sc.close();
     }
 
-    public static void processInput(String userInput, Map<Pattern, Consumer<Matcher>> commands) {
+    public static void processInput(String userInput, Map<Pattern, Consumer<Matcher>> commands,
+                                    String fileName, List<Task> list) {
         boolean matched = false;
         for (Map.Entry<Pattern, Consumer<Matcher>> entry : commands.entrySet()) {
             Matcher matcher = entry.getKey().matcher(userInput);
             if (matcher.matches()) {
                 entry.getValue().accept(matcher);
+                saveData(fileName, list);
                 matched = true;
                 break;
             }
@@ -151,7 +154,7 @@ public class YapperBot {
         }
     }
 
-    public static void initData() {
+    private static String initData() {
         String dirName = "data";
         String fileName = "data/YapperBot.txt";
 
@@ -160,8 +163,7 @@ public class YapperBot {
             if (dir.mkdir()) {
                 System.out.println("Directory created: " + dirName);
             } else {
-                System.out.println("Failed to create directory: " + dirName);
-                return;
+                throw new RuntimeException("Failed to create Directory");
             }
         }
 
@@ -177,9 +179,17 @@ public class YapperBot {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return fileName;
     }
 
-    public static void saveData(List<Task> list) {
-
+    public static void saveData(String fileName, List<Task> list) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for (Task task : list) {
+                writer.write(task.saveState());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

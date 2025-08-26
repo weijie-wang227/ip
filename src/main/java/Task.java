@@ -38,4 +38,6 @@ public abstract class Task
                 toString() +
                 "\nNow you have " + size + " in the list";
     }
+
+    public abstract String saveState();
 }
