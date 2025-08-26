@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 public abstract class Task
 {
     private boolean done;
@@ -6,6 +8,11 @@ public abstract class Task
         this.description = description;
         this.done = false;
     }
+    public Task(String description, boolean done) {
+        this.description = description;
+        this.done = done;
+    }
+
     public void mark() {
         done = true;
     }

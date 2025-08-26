@@ -6,6 +6,11 @@ public class Todo extends Task {
         this.description = description;
     }
 
+    public Todo(String description, boolean done) {
+        super(description, done);
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();
@@ -15,5 +20,6 @@ public class Todo extends Task {
     public String saveState() {
         return "T | " + (isDone() ? 1 : 0) + " | " + description + "\n";
     }
+
 
 }
