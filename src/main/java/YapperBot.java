@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.*;
@@ -5,6 +9,8 @@ import java.util.function.Consumer;
 import java.util.regex.*;
 public class YapperBot {
     public static void main(String[] args) {
+        String fileName = initData();
+
         Scanner sc = new Scanner(System.in);
         String greeting =
                 "--------------------------------\n" +
@@ -15,7 +21,7 @@ public class YapperBot {
                 "--------------------------------\n" +
                 "Bye. Hope to see you again soon!\n" +
                 "--------------------------------";
-        List<Task> previous = new ArrayList<>();
+        List<Task> taskList = loadFile(fileName);
         Map<Pattern, Consumer<Matcher>> commands = new LinkedHashMap<>();
 
         // mark command
@@ -26,10 +32,10 @@ public class YapperBot {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
             }
             int index = Integer.parseInt(digit) - 1;
-            if (index >= previous.size() || index < 0) {
+            if (index >= taskList.size() || index < 0) {
                 throw new InvalidInputException("OOPS!!! The index is out of range");
             } else {
-                Task task = previous.get(index);
+                Task task = taskList.get(index);
                 task.mark();
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(task);
@@ -43,10 +49,10 @@ public class YapperBot {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
             }
             int index = Integer.parseInt(digit) - 1;
-            if (index >= previous.size() || index < 0) {
+            if (index >= taskList.size() || index < 0) {
                 throw new InvalidInputException("OOPS!!! The index is out of range");
             } else {
-                Task task = previous.get(index);
+                Task task = taskList.get(index);
                 task.unmark();
                 System.out.println("Ok, I've marked this task as not done yet:");
                 System.out.println(task);
@@ -60,13 +66,13 @@ public class YapperBot {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
             }
             int index = Integer.parseInt(digit) - 1;
-            if (index >= previous.size() || index < 0) {
+            if (index >= taskList.size() || index < 0) {
                 throw new InvalidInputException("OOPS!!! The index is out of range");
             } else {
-                Task task = previous.get(index);
-                previous.remove(index);
+                Task task = taskList.get(index);
+                taskList.remove(index);
                 System.out.println("Ok, I've removed this task");
-                System.out.println(task.deleteMessage(previous.size()));
+                System.out.println(task.deleteMessage(taskList.size()));
             }
         });
 
@@ -77,8 +83,8 @@ public class YapperBot {
             if (desc == null) {
                 throw new InvalidInputException("OOPS!!! The description of a todo cannot be empty");
             }
-            previous.add(task);
-            System.out.println(task.forDisplay(previous.size()));
+            taskList.add(task);
+            System.out.println(task.forDisplay(taskList.size()));
         });
 
         //deadline
@@ -90,8 +96,8 @@ public class YapperBot {
                 throw new InvalidInputException("OOPS!!! A deadline task has to have both a description and end date");
             }
             Task task = new Deadline(desc, end);
-            previous.add(task);
-            System.out.println(task.forDisplay(previous.size()));
+            taskList.add(task);
+            System.out.println(task.forDisplay(taskList.size()));
         });
 
         //event
@@ -103,8 +109,8 @@ public class YapperBot {
                 throw new InvalidInputException("OOPS!!! A event has to have a description, a start date and an end date");
             }
             Task task = new Event(desc, start, end);
-            previous.add(task);
-            System.out.println(task.forDisplay(previous.size()));
+            taskList.add(task);
+            System.out.println(task.forDisplay(taskList.size()));
 
         });
 
@@ -118,12 +124,12 @@ public class YapperBot {
                 System.out.println(exitMessage);
                 break;
             } else if (Objects.equals(userInput, "list")) {
-                for (int i = 0; i < previous.size(); i++) {
-                    System.out.println((i + 1) + ", " + previous.get(i));
+                for (int i = 0; i < taskList.size(); i++) {
+                    System.out.println((i + 1) + ", " + taskList.get(i));
                 }
             } else {
                 try {
-                    processInput(userInput, commands);
+                    processInput(userInput, commands, fileName, taskList);
                 } catch (InvalidInputException e) {
                     System.out.println(e.getMessage());
                 }
@@ -132,12 +138,14 @@ public class YapperBot {
         sc.close();
     }
 
-    public static void processInput(String userInput, Map<Pattern, Consumer<Matcher>> commands) {
+    private static void processInput(String userInput, Map<Pattern, Consumer<Matcher>> commands,
+                                    String fileName, List<Task> list) {
         boolean matched = false;
         for (Map.Entry<Pattern, Consumer<Matcher>> entry : commands.entrySet()) {
             Matcher matcher = entry.getKey().matcher(userInput);
             if (matcher.matches()) {
                 entry.getValue().accept(matcher);
+                saveData(fileName, list);
                 matched = true;
                 break;
             }
@@ -145,5 +153,90 @@ public class YapperBot {
         if (!matched) {
             throw new InvalidInputException();
         }
+    }
+
+    private static String initData() {
+        String dirName = "data";
+        String fileName = "data/YapperBot.txt";
+
+        File dir = new File(dirName);
+        if (!dir.exists()) {
+            if (dir.mkdir()) {
+                System.out.println("Directory created: " + dirName);
+            } else {
+                throw new RuntimeException("Failed to create Directory");
+            }
+        }
+
+        // Create file if it doesn't exist and write to it
+        File file = new File(fileName);
+        try
+        {
+            if (file.createNewFile()) {
+                System.out.println("Save File created: " + dirName);
+            } else {
+                System.out.println("Save File already exits");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return fileName;
+    }
+
+    private static void saveData(String fileName, List<Task> list) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for (Task task : list) {
+                writer.write(task.saveState());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static List<Task> loadFile(String fileName) {
+        try (Scanner scanner = new Scanner(new File(fileName))) {
+            List<Task> taskList= new ArrayList<Task>();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                Task task = decode(line);
+                taskList.add(task);
+                System.out.println(task + " loaded");
+            }
+            return taskList;
+        } catch (FileNotFoundException | InvalidInputException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Task decode(String line) throws InvalidInputException {
+        Pattern pattern = Pattern.compile("^T\\s*\\|\\s*(\\d+)\\s*\\|\\s*(.+)$");
+        Matcher matcher = pattern.matcher(line);
+        if (matcher.matches()) {
+            String number = matcher.group(1);       // "1"
+            String description = matcher.group(2);  // "readbook"
+            return new Todo(description, Objects.equals(number, "1"));
+        }
+
+        pattern = Pattern.compile("^D\\s*\\|\\s*(\\d+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*(.+)$");
+        matcher = pattern.matcher(line);
+        if (matcher.matches()) {
+            String number = matcher.group(1);       // "0"
+            String description = matcher.group(2);  // "return book"
+            String deadline = matcher.group(3);     // "June 6th"
+            return new Deadline(description, deadline, Objects.equals(number, "1"));
+        }
+
+        pattern = Pattern.compile("^E\\s*\\|\\s*(\\d+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*(.+?)\\s*-\\s*(.+)$");
+        matcher = pattern.matcher(line);
+        if (matcher.matches()) {
+            String number = matcher.group(1);        // "0"
+            String description = matcher.group(2);   // "meeting"
+            String from = matcher.group(3);          // "July 7th 2pm"
+            String to = matcher.group(4);            // "4pm"
+            return new Event(description, from, to, Objects.equals(number, "1"));
+        }
+
+        throw new InvalidInputException("Save File corrupted");
     }
 }
