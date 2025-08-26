@@ -25,4 +25,9 @@ public class Deadline extends Task {
     public String saveState() {
         return "D | " + (isDone() ? 1 : 0) + " | " + description + " | " + deadline + "\n";
     }
+
+    @Override
+    public boolean isCurrent(LocalDateTime time) {
+        return time.isBefore(deadline);
+    }
 }

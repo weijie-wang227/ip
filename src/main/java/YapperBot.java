@@ -11,10 +11,12 @@ import java.util.Scanner;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.*;
+
+
 public class YapperBot {
     public static void main(String[] args) {
         String fileName = initData();
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
         Scanner sc = new Scanner(System.in);
         String greeting =
                 "--------------------------------\n" +
@@ -101,7 +103,6 @@ public class YapperBot {
                 throw new InvalidInputException("OOPS!!! A deadline task has to have both a description and end date");
             }
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
                 LocalDateTime dateTime = LocalDateTime.parse(end, formatter);
                 task = new Deadline(desc, dateTime);
             } catch (DateTimeParseException e) {
@@ -122,7 +123,6 @@ public class YapperBot {
                 throw new InvalidInputException("OOPS!!! A event has to have a description, a start date and an end date");
             }
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
                 LocalDateTime startTime = LocalDateTime.parse(start, formatter);
                 LocalDateTime endTime = LocalDateTime.parse(end, formatter);
                 task = new Event(desc, startTime, endTime);
@@ -133,6 +133,23 @@ public class YapperBot {
             taskList.add(task);
             System.out.println(task.forDisplay(taskList.size()));
 
+        });
+
+        //time
+        commands.put(Pattern.compile("time\\s+(.+)"), matcher -> {
+            String text = matcher.group(1);
+            try {
+                LocalDateTime time = LocalDateTime.parse(text, formatter);
+                System.out.println("These tasks are still current");
+                for (Task task: taskList) {
+                    if (task.isCurrent(time)) {
+                        System.out.println(task);
+                    }
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format: " + text);
+                return;
+            }
         });
 
 

@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class Todo extends Task {
     private String description;
 
@@ -21,5 +23,8 @@ public class Todo extends Task {
         return "T | " + (isDone() ? 1 : 0) + " | " + description + "\n";
     }
 
-
+    @Override
+    public boolean isCurrent(LocalDateTime time) {
+        return true;
+    }
 }

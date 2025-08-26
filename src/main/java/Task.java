@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 
 public abstract class Task
@@ -47,4 +48,6 @@ public abstract class Task
     }
 
     public abstract String saveState();
+
+    public abstract boolean isCurrent(LocalDateTime time);
 }

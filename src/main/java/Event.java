@@ -27,4 +27,9 @@ public class Event extends Task {
     public String saveState() {
         return "E | " + (isDone() ? 1 : 0) + " | " + description + " | " + start + "-" + end + "\n";
     }
+
+    @Override
+    public boolean isCurrent(LocalDateTime time) {
+        return time.isAfter(start) && time.isBefore(end);
+    }
 }
