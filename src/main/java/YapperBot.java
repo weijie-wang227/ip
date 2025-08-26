@@ -2,15 +2,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.*;
+
+
 public class YapperBot {
     public static void main(String[] args) {
         String fileName = initData();
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
         Scanner sc = new Scanner(System.in);
         String greeting =
                 "--------------------------------\n" +
@@ -92,10 +98,17 @@ public class YapperBot {
         ), matcher -> {
             String desc = matcher.group(1);
             String end = matcher.group(2);
+            Task task;
             if (desc == null|| end == null) {
                 throw new InvalidInputException("OOPS!!! A deadline task has to have both a description and end date");
             }
-            Task task = new Deadline(desc, end);
+            try {
+                LocalDateTime dateTime = LocalDateTime.parse(end, formatter);
+                task = new Deadline(desc, dateTime);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format: " + end);
+                return;
+            }
             taskList.add(task);
             System.out.println(task.forDisplay(taskList.size()));
         });
@@ -105,13 +118,38 @@ public class YapperBot {
             String desc = matcher.group(1);
             String start = matcher.group(2);
             String end = matcher.group(3);
+            Task task;
             if (desc == null || start == null || end == null) {
                 throw new InvalidInputException("OOPS!!! A event has to have a description, a start date and an end date");
             }
-            Task task = new Event(desc, start, end);
+            try {
+                LocalDateTime startTime = LocalDateTime.parse(start, formatter);
+                LocalDateTime endTime = LocalDateTime.parse(end, formatter);
+                task = new Event(desc, startTime, endTime);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format: " + end);
+                return;
+            }
             taskList.add(task);
             System.out.println(task.forDisplay(taskList.size()));
 
+        });
+
+        //time
+        commands.put(Pattern.compile("time\\s+(.+)"), matcher -> {
+            String text = matcher.group(1);
+            try {
+                LocalDateTime time = LocalDateTime.parse(text, formatter);
+                System.out.println("These tasks are still current");
+                for (Task task: taskList) {
+                    if (task.isCurrent(time)) {
+                        System.out.println(task);
+                    }
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format: " + text);
+                return;
+            }
         });
 
 
@@ -204,7 +242,7 @@ public class YapperBot {
                 System.out.println(task + " loaded");
             }
             return taskList;
-        } catch (FileNotFoundException | InvalidInputException e) {
+        } catch (FileNotFoundException | InvalidInputException | DateTimeParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -223,8 +261,10 @@ public class YapperBot {
         if (matcher.matches()) {
             String number = matcher.group(1);       // "0"
             String description = matcher.group(2);  // "return book"
-            String deadline = matcher.group(3);     // "June 6th"
-            return new Deadline(description, deadline, Objects.equals(number, "1"));
+            String deadline = matcher.group(3);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
+            LocalDateTime dateTime = LocalDateTime.parse(deadline, formatter);
+            return new Deadline(description, dateTime, Objects.equals(number, "1"));
         }
 
         pattern = Pattern.compile("^E\\s*\\|\\s*(\\d+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*(.+?)\\s*-\\s*(.+)$");
@@ -232,9 +272,12 @@ public class YapperBot {
         if (matcher.matches()) {
             String number = matcher.group(1);        // "0"
             String description = matcher.group(2);   // "meeting"
-            String from = matcher.group(3);          // "July 7th 2pm"
-            String to = matcher.group(4);            // "4pm"
-            return new Event(description, from, to, Objects.equals(number, "1"));
+            String from = matcher.group(3);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
+            LocalDateTime fromTime = LocalDateTime.parse(from, formatter);
+            String to = matcher.group(4);
+            LocalDateTime toTime = LocalDateTime.parse(to, formatter);
+            return new Event(description, fromTime, toTime, Objects.equals(number, "1"));
         }
 
         throw new InvalidInputException("Save File corrupted");
