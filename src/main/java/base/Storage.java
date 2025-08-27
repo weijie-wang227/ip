@@ -3,6 +3,7 @@ import tasks.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class Storage {
 
-    private String fileName;
+    private final String fileName;
     public Storage(String fileName) {
         this.fileName = fileName;
         File file = new File(fileName);
@@ -92,8 +93,16 @@ public class Storage {
         throw new InvalidInputException("Save File corrupted");
     }
 
-    public void save(TaskList tasks) {
-
+    public void save(TaskList tasks) throws IOException{
+        try (FileWriter writer = new FileWriter(fileName)) {
+            tasks.foreach(task -> {
+                try {
+                    writer.write(task.saveState());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
     }
 
 }

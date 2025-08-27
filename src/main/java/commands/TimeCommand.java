@@ -14,7 +14,8 @@ public class TimeCommand implements Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-
+        ui.display("These tasks are still current:");
+        tasks.foreach(task -> {if(task.isCurrent(time)) {ui.display(task.toString());}});
     }
 
     @Override

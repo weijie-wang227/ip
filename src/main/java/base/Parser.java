@@ -11,45 +11,47 @@ import java.util.regex.Pattern;
 public class Parser {
 
     public static Command parse(String input) {
+        Matcher markMatcher = Pattern.compile("^mark(?:\\s+(\\d+))?$").matcher(input);
+        Matcher unmarkMatcher = Pattern.compile("^unmark(?:\\s+(\\d+))?$").matcher(input);
+        Matcher deleteMatcher = Pattern.compile("^delete\\s+(\\d+)$").matcher(input);
+        Matcher todoMatcher = Pattern.compile("^todo(?:\\s+(.*))?$").matcher(input);
+        Matcher deadlineMatcher = Pattern.compile("^deadline(?:\\s+(.+?))?(?:\\s*/by\\s+(.+))?$").matcher(input);
+        Matcher eventMatcher = Pattern.compile("^event(?:\\s+(.+?))?(?:\\s*/from\\s+(.+?))?(?:\\s*/to\\s+(.+))?$").matcher(input);
+        Matcher timeMatcher = Pattern.compile("time\\s+(.+)").matcher(input);
+
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
 
-        if (input.matches("^mark(?:\\s+(\\d+))?$")){
-            //mark
-            Matcher matcher = Pattern.compile("^mark(?:\\s+(\\d+))?$").matcher(input);
-            String digit = matcher.group(1);
+        if (markMatcher.matches()){
+            String digit = markMatcher.group(1);
             if (digit == null) {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
             }
             int index = Integer.parseInt(digit) - 1;
             return new MarkCommand(index);
-        } else if (input.matches("^unmark\\s+(\\d+)$")) {
-            Matcher matcher = Pattern.compile("^unmark(?:\\s+(\\d+))?$").matcher(input);
-            String digit = matcher.group(1);
+        } else if (unmarkMatcher.matches()) {
+            String digit = unmarkMatcher.group(1);
             if (digit == null) {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
             }
             int index = Integer.parseInt(digit) - 1;
             return new UnmarkCommand(index);
-        } else if (input.matches("^delete\\s+(\\d+)$")) {
-            Matcher matcher = Pattern.compile("^delete\\s+(\\d+)$").matcher(input);
-            String digit = matcher.group(1);
+        } else if (deleteMatcher.matches()) {
+            String digit = deleteMatcher.group(1);
             if (digit == null) {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
             }
             int index = Integer.parseInt(digit) - 1;
             return new DeleteCommand(index);
-        } else if (input.matches("^todo(?:\\s+(.*))?$")) {
-            Matcher matcher = Pattern.compile("^todo(?:\\s+(.*))?$").matcher(input);
-            String desc = matcher.group(1);
+        } else if (todoMatcher.matches()) {
+            String desc = todoMatcher.group(1);
             if (desc == null) {
-                throw new InvalidInputException("OOPS!!! The index cannot be empty");
+                throw new InvalidInputException("OOPS!!! The description cannot be empty");
             }
             return new TodoCommand(desc);
-        } else if (input.matches("^deadline(?:\\s+(.+?))?(?:\\s*/by\\s+(.+))?$")) {
-            Matcher matcher = Pattern.compile("^deadline(?:\\s+(.+?))?(?:\\s*/by\\s+(.+))?$").matcher(input);
-            String desc = matcher.group(1);
-            String end = matcher.group(2);
+        } else if (deadlineMatcher.matches()) {
+            String desc = deadlineMatcher.group(1);
+            String end = deadlineMatcher.group(2);
             if (desc == null|| end == null) {
                 throw new InvalidInputException("OOPS!!! A deadline task has to have both a description and end date");
             }
@@ -59,11 +61,10 @@ public class Parser {
             } catch (DateTimeParseException e) {
                 throw new InvalidInputException("Invalid time format");
             }
-        } else if (input.matches("^event(?:\\s+(.+?))?(?:\\s*/from\\s+(.+?))?(?:\\s*/to\\s+(.+))?$")) {
-            Matcher matcher = Pattern.compile("^event(?:\\s+(.+?))?(?:\\s*/from\\s+(.+?))?(?:\\s*/to\\s+(.+))?$").matcher(input);
-            String desc = matcher.group(1);
-            String start = matcher.group(2);
-            String end = matcher.group(3);
+        } else if (eventMatcher.matches()) {
+            String desc = eventMatcher.group(1);
+            String start = eventMatcher.group(2);
+            String end = eventMatcher.group(3);
             if (desc == null || start == null || end == null) {
                 throw new InvalidInputException("OOPS!!! A event has to have a description, a start date and an end date");
             }
@@ -74,9 +75,8 @@ public class Parser {
             } catch (DateTimeParseException e) {
                 throw new InvalidInputException("Invalid time format");
             }
-        } else if (input.matches("time\\s+(.+)")) {
-            Matcher matcher = Pattern.compile("time\\s+(.+)").matcher(input);
-            String text = matcher.group(1);
+        } else if (timeMatcher.matches()) {
+            String text = timeMatcher.group(1);
             try {
                 LocalDateTime time = LocalDateTime.parse(text, formatter);
                 return new TimeCommand(time);

@@ -1,6 +1,7 @@
 package tasks;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
     private LocalDateTime deadline;
@@ -24,7 +25,8 @@ public class Deadline extends Task {
 
     @Override
     public String saveState() {
-        return "D | " + (isDone() ? 1 : 0) + " | " + description + " | " + deadline + "\n";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
+        return "D | " + (isDone() ? 1 : 0) + " | " + description + " | " + deadline.format(formatter) + "\n";
     }
 
     @Override

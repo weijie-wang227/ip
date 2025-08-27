@@ -2,8 +2,11 @@ package commands;
 
 import base.Storage;
 import base.Ui;
+import tasks.Deadline;
+import tasks.Task;
 import tasks.TaskList;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class DeadlineCommand implements Command{
@@ -16,7 +19,14 @@ public class DeadlineCommand implements Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-
+        Task deadline = new Deadline(desc, time);
+        tasks.add(deadline);
+        ui.display(deadline.forDisplay(tasks.size()));
+        try {
+            storage.save(tasks);
+        } catch (IOException e) {
+            ui.showError(e.getMessage());
+        }
     }
 
     @Override
