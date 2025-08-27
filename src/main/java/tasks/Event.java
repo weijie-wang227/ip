@@ -1,4 +1,7 @@
+package tasks;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
     private LocalDateTime start;
@@ -25,7 +28,9 @@ public class Event extends Task {
 
     @Override
     public String saveState() {
-        return "E | " + (isDone() ? 1 : 0) + " | " + description + " | " + start + "-" + end + "\n";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
+
+        return "E | " + (isDone() ? 1 : 0) + " | " + description + " | " + start.format(formatter) + "-" + end.format(formatter) + "\n";
     }
 
     @Override
