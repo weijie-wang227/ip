@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,19 +14,26 @@ import java.util.regex.*;
 
 public class YapperBot {
     public static void main(String[] args) {
-        String fileName = initData();
+        new YapperBot("data/YapperBot.txt").run();
+    }
+
+    private YapperBot(String filePath) {
+        UI ui = new UI();
+        Storage storage = new Storage(filePath);
+        TaskList tasks;
+
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (RuntimeException e) {
+            ui.showError(e);
+            tasks = new TaskList();
+        }
+    }
+    private void run() {
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
         Scanner sc = new Scanner(System.in);
-        String greeting =
-                "--------------------------------\n" +
-                "Hello! I'm YapperBot\n" +
-                "What can I do for you?\n" +
-                "--------------------------------";
-        String exitMessage =
-                "--------------------------------\n" +
-                "Bye. Hope to see you again soon!\n" +
-                "--------------------------------";
-        List<Task> taskList = loadFile(fileName);
+        List<Task> taskList = loadFile(filePath);
         Map<Pattern, Consumer<Matcher>> commands = new LinkedHashMap<>();
 
         // mark command
@@ -135,6 +141,7 @@ public class YapperBot {
 
         });
 
+
         //time
         commands.put(Pattern.compile("time\\s+(.+)"), matcher -> {
             String text = matcher.group(1);
@@ -167,13 +174,17 @@ public class YapperBot {
                 }
             } else {
                 try {
-                    processInput(userInput, commands, fileName, taskList);
+                    processInput(userInput, commands, filePath, taskList);
                 } catch (InvalidInputException e) {
                     System.out.println(e.getMessage());
                 }
             }
         }
         sc.close();
+    };
+
+    private void run() {
+
     }
 
     private static void processInput(String userInput, Map<Pattern, Consumer<Matcher>> commands,
@@ -193,34 +204,6 @@ public class YapperBot {
         }
     }
 
-    private static String initData() {
-        String dirName = "data";
-        String fileName = "data/YapperBot.txt";
-
-        File dir = new File(dirName);
-        if (!dir.exists()) {
-            if (dir.mkdir()) {
-                System.out.println("Directory created: " + dirName);
-            } else {
-                throw new RuntimeException("Failed to create Directory");
-            }
-        }
-
-        // Create file if it doesn't exist and write to it
-        File file = new File(fileName);
-        try
-        {
-            if (file.createNewFile()) {
-                System.out.println("Save File created: " + dirName);
-            } else {
-                System.out.println("Save File already exits");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return fileName;
-    }
 
     private static void saveData(String fileName, List<Task> list) {
         try (FileWriter writer = new FileWriter(fileName)) {
@@ -230,56 +213,5 @@ public class YapperBot {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static List<Task> loadFile(String fileName) {
-        try (Scanner scanner = new Scanner(new File(fileName))) {
-            List<Task> taskList= new ArrayList<Task>();
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Task task = decode(line);
-                taskList.add(task);
-                System.out.println(task + " loaded");
-            }
-            return taskList;
-        } catch (FileNotFoundException | InvalidInputException | DateTimeParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static Task decode(String line) throws InvalidInputException {
-        Pattern pattern = Pattern.compile("^T\\s*\\|\\s*(\\d+)\\s*\\|\\s*(.+)$");
-        Matcher matcher = pattern.matcher(line);
-        if (matcher.matches()) {
-            String number = matcher.group(1);       // "1"
-            String description = matcher.group(2);  // "readbook"
-            return new Todo(description, Objects.equals(number, "1"));
-        }
-
-        pattern = Pattern.compile("^D\\s*\\|\\s*(\\d+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*(.+)$");
-        matcher = pattern.matcher(line);
-        if (matcher.matches()) {
-            String number = matcher.group(1);       // "0"
-            String description = matcher.group(2);  // "return book"
-            String deadline = matcher.group(3);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
-            LocalDateTime dateTime = LocalDateTime.parse(deadline, formatter);
-            return new Deadline(description, dateTime, Objects.equals(number, "1"));
-        }
-
-        pattern = Pattern.compile("^E\\s*\\|\\s*(\\d+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*(.+?)\\s*-\\s*(.+)$");
-        matcher = pattern.matcher(line);
-        if (matcher.matches()) {
-            String number = matcher.group(1);        // "0"
-            String description = matcher.group(2);   // "meeting"
-            String from = matcher.group(3);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
-            LocalDateTime fromTime = LocalDateTime.parse(from, formatter);
-            String to = matcher.group(4);
-            LocalDateTime toTime = LocalDateTime.parse(to, formatter);
-            return new Event(description, fromTime, toTime, Objects.equals(number, "1"));
-        }
-
-        throw new InvalidInputException("Save File corrupted");
     }
 }
