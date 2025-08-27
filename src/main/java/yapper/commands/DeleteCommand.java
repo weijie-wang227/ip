@@ -30,4 +30,14 @@ public class DeleteCommand implements Command{
     public boolean isExit() {
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj2) {
+        if (obj2 instanceof DeleteCommand) {
+            DeleteCommand command = (DeleteCommand) obj2;
+            return index == command.index;
+        } else {
+            return false;
+        }
+    }
 }

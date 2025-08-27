@@ -22,4 +22,14 @@ public class TimeCommand implements Command{
     public boolean isExit() {
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj2) {
+        if (obj2 instanceof TimeCommand) {
+            TimeCommand command = (TimeCommand) obj2;
+            return time.equals(command.time);
+        } else {
+            return false;
+        }
+    }
 }

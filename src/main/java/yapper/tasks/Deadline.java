@@ -1,5 +1,7 @@
 package yapper.tasks;
 
+import yapper.commands.DeadlineCommand;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -30,7 +32,15 @@ public class Deadline extends Task {
     }
 
     @Override
-    public boolean isCurrent(LocalDateTime time) {
-        return time.isBefore(deadline);
+    public boolean isCurrent(LocalDateTime time) {return false;}
+
+    @Override
+    public boolean equals(Object obj2) {
+        if (obj2 instanceof Deadline) {
+            Deadline command = (Deadline) obj2;
+            return description.equals(command.description) && deadline.equals(command.deadline);
+        } else {
+            return false;
+        }
     }
 }

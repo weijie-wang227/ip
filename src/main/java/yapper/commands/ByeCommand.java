@@ -14,4 +14,9 @@ public class ByeCommand implements Command{
     public boolean isExit() {
         return true;
     }
+
+    @Override
+    public boolean equals(Object obj2) {
+        return obj2 instanceof ByeCommand;
+    }
 }

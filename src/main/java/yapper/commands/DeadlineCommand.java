@@ -33,4 +33,14 @@ public class DeadlineCommand implements Command{
     public boolean isExit() {
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj2) {
+        if (obj2 instanceof DeadlineCommand) {
+            DeadlineCommand command = (DeadlineCommand) obj2;
+            return desc.equals(command.desc) && time.equals(command.time);
+        } else {
+            return false;
+        }
+    }
 }

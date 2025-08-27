@@ -15,4 +15,9 @@ public class ListCommand implements Command{
     public boolean isExit() {
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj2) {
+        return obj2 instanceof ListCommand;
+    }
 }

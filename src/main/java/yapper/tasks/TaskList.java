@@ -49,4 +49,20 @@ public class TaskList {
             biConsumer.accept(tasks.get(i), i);
         }
     }
+
+    @Override
+    public boolean equals(Object obj2) {
+        if (obj2 instanceof TaskList) {
+            TaskList tasklist2 = (TaskList) obj2;
+            System.out.println(get(0).equals(tasklist2.get(0)));
+            System.out.println(get(0));
+            System.out.println(tasklist2.get(0));
+            return tasks.equals(tasklist2.tasks);
+        } else {return false;}
+    }
+
+    @Override
+    public String toString() {
+        return tasks.toString();
+    }
 }

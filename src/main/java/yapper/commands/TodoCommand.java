@@ -30,4 +30,14 @@ public class TodoCommand implements Command{
     public boolean isExit() {
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj2) {
+        if (obj2 instanceof TodoCommand) {
+            TodoCommand command = (TodoCommand) obj2;
+            return desc.equals(command.desc);
+        } else {
+            return false;
+        }
+    }
 }
