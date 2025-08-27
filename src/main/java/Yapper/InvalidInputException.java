@@ -1,4 +1,4 @@
-package base;
+package Yapper;
 
 public class InvalidInputException extends RuntimeException {
 

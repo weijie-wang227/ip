@@ -1,6 +1,6 @@
 package tasks;
 
-import base.InvalidInputException;
+import Yapper.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
