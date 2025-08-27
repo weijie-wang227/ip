@@ -1,24 +1,24 @@
-package commands;
+package yapper.commands;
 
-import Yapper.Storage;
-import Yapper.Ui;
-import tasks.Task;
-import tasks.TaskList;
+import yapper.Storage;
+import yapper.Ui;
+import yapper.tasks.TaskList;
+import yapper.tasks.Task;
 
 import java.io.IOException;
 
-public class DeleteCommand implements Command{
+public class MarkCommand implements Command{
     private int index;
-    public DeleteCommand(int index) {
+    public MarkCommand(int index) {
         this.index = index;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);
-        tasks.remove(index);
-        ui.display("Ok, I've removed this task");
-        ui.display(task.deleteMessage(tasks.size()));
+        task.mark();
+        ui.display("Ok, I've marked this task as done");
+        ui.display(task.toString());
         try {
             storage.save(tasks);
         } catch (IOException e) {

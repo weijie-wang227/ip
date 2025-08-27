@@ -1,5 +1,5 @@
-package Yapper;
-import tasks.*;
+package yapper;
+import yapper.tasks.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

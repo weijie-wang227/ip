@@ -1,5 +1,5 @@
-package Yapper;
-import commands.*;
+package yapper;
+import yapper.commands.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

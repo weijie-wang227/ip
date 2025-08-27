@@ -1,10 +1,10 @@
-package commands;
+package yapper.commands;
 
-import Yapper.Storage;
-import Yapper.Ui;
-import tasks.Deadline;
-import tasks.Task;
-import tasks.TaskList;
+import yapper.Storage;
+import yapper.Ui;
+import yapper.tasks.Deadline;
+import yapper.tasks.Task;
+import yapper.tasks.TaskList;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

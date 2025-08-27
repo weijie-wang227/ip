@@ -1,6 +1,6 @@
-package Yapper;
-import commands.Command;
-import tasks.*;
+package yapper;
+import yapper.commands.Command;
+import yapper.tasks.*;
 
 
 public class YapperBot {

@@ -1,23 +1,23 @@
-package commands;
+package yapper.commands;
 
-import Yapper.Storage;
-import Yapper.Ui;
-import tasks.TaskList;
-import tasks.Task;
+import yapper.Storage;
+import yapper.Ui;
+import yapper.tasks.Task;
+import yapper.tasks.TaskList;
 
 import java.io.IOException;
 
-public class MarkCommand implements Command{
+public class UnmarkCommand implements Command{
     private int index;
-    public MarkCommand(int index) {
+    public UnmarkCommand(int index) {
         this.index = index;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);
-        task.mark();
-        ui.display("Ok, I've marked this task as done");
+        task.unmark();
+        ui.display("Ok, I've marked this task as not done yet");
         ui.display(task.toString());
         try {
             storage.save(tasks);

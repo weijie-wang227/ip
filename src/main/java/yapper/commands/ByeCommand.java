@@ -1,8 +1,8 @@
-package commands;
+package yapper.commands;
 
-import Yapper.Storage;
-import Yapper.Ui;
-import tasks.TaskList;
+import yapper.Storage;
+import yapper.Ui;
+import yapper.tasks.TaskList;
 
 public class ByeCommand implements Command{
     @Override

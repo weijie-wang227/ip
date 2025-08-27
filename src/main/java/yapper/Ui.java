@@ -1,4 +1,4 @@
-package Yapper;
+package yapper;
 import java.util.Scanner;
 
 public class Ui {

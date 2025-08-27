@@ -1,10 +1,10 @@
-package commands;
+package yapper.commands;
 
-import Yapper.Storage;
-import Yapper.Ui;
-import tasks.Task;
-import tasks.TaskList;
-import tasks.Todo;
+import yapper.Storage;
+import yapper.Ui;
+import yapper.tasks.Task;
+import yapper.tasks.TaskList;
+import yapper.tasks.Todo;
 
 import java.io.IOException;
 
