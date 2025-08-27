@@ -1,57 +1,65 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+package base;
+import commands.Command;
+import tasks.*;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.*;
 
 
 public class YapperBot {
-    public static void main(String[] args) {
-        new YapperBot("data/YapperBot.txt").run();
-    }
+
+
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
 
     private YapperBot(String filePath) {
-        UI ui = new UI();
-        Storage storage = new Storage(filePath);
-        TaskList tasks;
+        ui = new Ui();
+        storage = new Storage(filePath);
 
         try {
             tasks = new TaskList(storage.load());
         } catch (RuntimeException e) {
-            ui.showError(e);
+            ui.showError(e.getMessage());
             tasks = new TaskList();
         }
     }
-    private void run() {
 
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showLine();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
+        }
+        ui.showBye();
+    }
+
+    private void run() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
-        Scanner sc = new Scanner(System.in);
-        List<Task> taskList = loadFile(filePath);
         Map<Pattern, Consumer<Matcher>> commands = new LinkedHashMap<>();
 
         // mark command
         commands.put(Pattern.compile("^mark(?:\\s+(\\d+))?$"
         ), matcher -> {
-            String digit = matcher.group(1);
-            if (digit == null) {
-                throw new InvalidInputException("OOPS!!! The index cannot be empty");
-            }
-            int index = Integer.parseInt(digit) - 1;
-            if (index >= taskList.size() || index < 0) {
-                throw new InvalidInputException("OOPS!!! The index is out of range");
-            } else {
-                Task task = taskList.get(index);
-                task.mark();
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println(task);
-            }
+
         });
 
         // unmark command
@@ -163,7 +171,6 @@ public class YapperBot {
         // main loop
         System.out.println(greeting);
         while (true) {
-            String userInput = sc.nextLine();
 
             if (Objects.equals(userInput, "bye")) {
                 System.out.println(exitMessage);
@@ -183,9 +190,6 @@ public class YapperBot {
         sc.close();
     };
 
-    private void run() {
-
-    }
 
     private static void processInput(String userInput, Map<Pattern, Consumer<Matcher>> commands,
                                     String fileName, List<Task> list) {
@@ -213,5 +217,9 @@ public class YapperBot {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        new YapperBot("data/YapperBot.txt").run();
     }
 }
