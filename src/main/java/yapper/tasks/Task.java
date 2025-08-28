@@ -2,6 +2,9 @@ package yapper.tasks;
 
 import java.time.LocalDateTime;
 
+/**
+ * Parent class for all tasks
+ */
 public abstract class Task
 {
     private boolean done;

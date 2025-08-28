@@ -5,6 +5,9 @@ import yapper.commands.DeadlineCommand;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represent a task in the format: deadline desc/by time
+ */
 public class Deadline extends Task {
     private LocalDateTime deadline;
     private String description;

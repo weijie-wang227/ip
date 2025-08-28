@@ -1,5 +1,8 @@
 package yapper;
 
+/**
+ * Represent Exception thrown when user keys in an invalid input
+ */
 public class InvalidInputException extends RuntimeException {
 
     public InvalidInputException() {

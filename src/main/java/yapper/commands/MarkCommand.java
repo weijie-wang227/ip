@@ -7,6 +7,9 @@ import yapper.tasks.Task;
 
 import java.io.IOException;
 
+/**
+ * Represent command used to mark the task as done
+ */
 public class MarkCommand implements Command{
     private int index;
     public MarkCommand(int index) {

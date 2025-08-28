@@ -4,6 +4,9 @@ import yapper.Storage;
 import yapper.Ui;
 import yapper.tasks.TaskList;
 
+/**
+ * Represent the command used to list all the tasks in Task List
+ */
 public class ListCommand implements Command{
 
     @Override

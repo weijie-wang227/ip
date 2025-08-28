@@ -2,6 +2,9 @@ package yapper.tasks;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represent a task in the format: todo desc
+ */
 public class Todo extends Task {
     private String description;
 

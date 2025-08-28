@@ -1,6 +1,9 @@
 package yapper;
 import java.util.Scanner;
 
+/**
+ * Represent Ui for the user to interact with
+ */
 public class Ui {
     private final Scanner sc;
 

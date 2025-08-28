@@ -15,6 +15,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Used to interact with the storage
+ */
 public class Storage {
 
     private final String fileName;

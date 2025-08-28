@@ -8,6 +8,9 @@ import yapper.tasks.Todo;
 
 import java.io.IOException;
 
+/**
+ * Represent Command Used to create the Todo task
+ */
 public class TodoCommand implements Command{
     private String desc;
     public TodoCommand(String desc) {

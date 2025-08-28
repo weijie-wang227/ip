@@ -9,6 +9,9 @@ import yapper.tasks.TaskList;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+/**
+ * Represent Command used to create Event Task
+ */
 public class EventCommand implements Command{
     private String desc;
     private LocalDateTime start;

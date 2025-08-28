@@ -3,6 +3,9 @@ package yapper.tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represent a task in the format: event desc/from time/to start
+ */
 public class Event extends Task {
     private LocalDateTime start;
     private LocalDateTime end;

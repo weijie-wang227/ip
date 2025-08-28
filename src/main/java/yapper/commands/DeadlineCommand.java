@@ -9,6 +9,9 @@ import yapper.tasks.TaskList;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+/**
+ * Represent the command used to create the Deadline task
+ */
 public class DeadlineCommand implements Command{
     private String desc;
     private LocalDateTime time;

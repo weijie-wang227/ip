@@ -2,7 +2,9 @@ package yapper;
 import yapper.commands.Command;
 import yapper.tasks.*;
 
-
+/**
+ * Main bot
+ */
 public class YapperBot {
 
 

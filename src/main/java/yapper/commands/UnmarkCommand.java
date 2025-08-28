@@ -7,6 +7,9 @@ import yapper.tasks.TaskList;
 
 import java.io.IOException;
 
+/**
+ * Represent Command used to unmark a task as done
+ */
 public class UnmarkCommand implements Command{
     private int index;
     public UnmarkCommand(int index) {
