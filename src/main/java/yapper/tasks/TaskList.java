@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Represent a list used to store all the tasks
@@ -67,5 +68,11 @@ public class TaskList {
     @Override
     public String toString() {
         return tasks.toString();
+    }
+
+    public TaskList search(String keyword) {
+        return new TaskList(tasks.stream()
+                .filter(task -> task.hasKeyword(keyword))
+                .collect(Collectors.toList()));
     }
 }

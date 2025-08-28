@@ -1,14 +1,5 @@
 package yapper;
-import yapper.commands.Command;
-import yapper.commands.MarkCommand;
-import yapper.commands.UnmarkCommand;
-import yapper.commands.DeleteCommand;
-import yapper.commands.TodoCommand;
-import yapper.commands.DeadlineCommand;
-import yapper.commands.EventCommand;
-import yapper.commands.TimeCommand;
-import yapper.commands.ListCommand;
-import yapper.commands.ByeCommand;
+import yapper.commands.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,10 +25,12 @@ public class Parser {
         Matcher deadlineMatcher = Pattern.compile("^deadline(?:\\s+(.+?))?(?:\\s*/by\\s+(.+))?$").matcher(input);
         Matcher eventMatcher = Pattern.compile("^event(?:\\s+(.+?))?(?:\\s*/from\\s+(.+?))?(?:\\s*/to\\s+(.+))?$").matcher(input);
         Matcher timeMatcher = Pattern.compile("time\\s+(.+)").matcher(input);
+        Matcher findMatcher = Pattern.compile("^find(?:\\s+(.*))?$").matcher(input);
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
-        if (markMatcher.matches()){
+
+        if (markMatcher.matches()) {
             String digit = markMatcher.group(1);
             if (digit == null) {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
@@ -67,7 +60,7 @@ public class Parser {
         } else if (deadlineMatcher.matches()) {
             String desc = deadlineMatcher.group(1);
             String end = deadlineMatcher.group(2);
-            if (desc == null|| end == null) {
+            if (desc == null || end == null) {
                 throw new InvalidInputException("OOPS!!! A deadline task has to have both a description and end date");
             }
             try {
@@ -98,6 +91,12 @@ public class Parser {
             } catch (DateTimeParseException e) {
                 throw new InvalidInputException("Invalid time format");
             }
+        } else if (findMatcher.matches()) {
+            String keyword = findMatcher.group(1);
+            if (keyword == null) {
+                throw new InvalidInputException("OOPS!!! The description cannot be empty");
+            }
+            return new FindCommand(keyword);
         } else if (input.equals("list")) {
             return new ListCommand();
         } else if (input.equals("bye")) {
