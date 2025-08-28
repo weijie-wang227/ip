@@ -51,4 +51,8 @@ public abstract class Task
     public abstract String saveState();
 
     public abstract boolean isCurrent(LocalDateTime time);
+
+    public boolean hasKeyword(String keyword) {
+        return description.contains(keyword);
+    }
 }

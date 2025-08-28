@@ -1,6 +1,8 @@
 package yapper;
 import java.util.Scanner;
 
+import yapper.tasks.TaskList;
+
 public class Ui {
     private final Scanner sc;
 
@@ -33,5 +35,9 @@ public class Ui {
 
     public String readCommand() {
         return sc.nextLine();
+    }
+
+    public void displayList(TaskList tasks) {
+        tasks.foreachI((task, i) -> {display((i + 1) + ", " + task);});
     }
 }
