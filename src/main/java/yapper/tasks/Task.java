@@ -7,32 +7,34 @@ import java.time.LocalDateTime;
  */
 public abstract class Task
 {
-    private boolean done;
+    private boolean isDone;
     private final String description;
+
     public Task(String description) {
         this.description = description;
-        this.done = false;
+        this.isDone = false;
     }
-    public Task(String description, boolean done) {
+
+    public Task(String description, boolean isDone) {
         this.description = description;
-        this.done = done;
+        this.isDone = isDone;
     }
 
     public void mark() {
-        done = true;
+        isDone = true;
     }
 
     public void unmark() {
-        done = false;
+        isDone = false;
     }
 
     public boolean isDone() {
-        return done;
+        return isDone;
     }
 
     @Override
     public String toString() {
-        if (done) {
+        if (isDone) {
             return "[X] " + description;
         } else {
             return "[ ] " + description;

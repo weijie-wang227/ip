@@ -1,6 +1,6 @@
 package yapper;
 import yapper.commands.Command;
-import yapper.tasks.*;
+import yapper.tasks.TaskList;
 
 /**
  * Main bot
