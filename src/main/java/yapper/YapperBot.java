@@ -12,7 +12,10 @@ public class YapperBot {
     private TaskList tasks;
     private Ui ui;
 
-
+    /**
+     * Initialises YapperBot with a new UI and Storage
+     * @param filePath
+     */
     private YapperBot(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -25,6 +28,9 @@ public class YapperBot {
         }
     }
 
+    /**
+     * Runs program loop
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -43,7 +49,10 @@ public class YapperBot {
         }
     }
 
-
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args) {
         new YapperBot("data/YapperBot.txt").run();
     }

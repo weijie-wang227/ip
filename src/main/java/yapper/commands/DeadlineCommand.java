@@ -15,11 +15,23 @@ import java.time.LocalDateTime;
 public class DeadlineCommand implements Command{
     private String desc;
     private LocalDateTime time;
+
+    /**
+     * Initialises the Deadline Command
+     * @param desc
+     * @param time deadline of task
+     */
     public DeadlineCommand(String desc, LocalDateTime time) {
         this.desc = desc;
         this.time = time;
     }
 
+    /**
+     * Creates Deadline and add to tasklist
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task deadline = new Deadline(desc, time);

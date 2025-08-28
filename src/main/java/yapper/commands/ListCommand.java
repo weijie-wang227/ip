@@ -9,6 +9,12 @@ import yapper.tasks.TaskList;
  */
 public class ListCommand implements Command{
 
+    /**
+     * List out all the tasks in tasklist
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.foreachI((task, i) -> {ui.display((i + 1) + ", " + task);});

@@ -16,12 +16,25 @@ public class EventCommand implements Command{
     private String desc;
     private LocalDateTime start;
     private LocalDateTime end;
+
+    /**
+     * Initialises the command
+     * @param desc
+     * @param start
+     * @param end
+     */
     public EventCommand(String desc, LocalDateTime start, LocalDateTime end) {
         this.desc = desc;
         this.start = start;
         this.end = end;
     }
 
+    /**
+     * Adds a Event task to tasklist
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task event = new Event(desc, start, end);

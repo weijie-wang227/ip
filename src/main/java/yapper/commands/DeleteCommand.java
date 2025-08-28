@@ -12,10 +12,21 @@ import java.io.IOException;
  */
 public class DeleteCommand implements Command{
     private int index;
+
+    /**
+     * Initialises Delete command
+     * @param index of task to be deleted
+     */
     public DeleteCommand(int index) {
         this.index = index;
     }
 
+    /**
+     * Deletes the task from tasklist
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);

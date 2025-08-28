@@ -21,6 +21,11 @@ import java.util.regex.Pattern;
 public class Storage {
 
     private final String fileName;
+
+    /**
+     * Adds a new file if it doesn't exist
+     * @param fileName path to file
+     */
     public Storage(String fileName) {
         this.fileName = fileName;
         File file = new File(fileName);
@@ -45,6 +50,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads from file into tasklist
+     * @return
+     */
     public List<Task> load() {
         try (Scanner scanner = new Scanner(new File(fileName))) {
             List<Task> taskList= new ArrayList<Task>();
@@ -96,6 +105,11 @@ public class Storage {
         throw new InvalidInputException("Save File corrupted");
     }
 
+    /**
+     * Writes into the file to update tasklist
+     * @param tasks
+     * @throws IOException
+     */
     public void save(TaskList tasks) throws IOException{
         try (FileWriter writer = new FileWriter(fileName)) {
             tasks.foreach(task -> {

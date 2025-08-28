@@ -12,10 +12,21 @@ import java.io.IOException;
  */
 public class MarkCommand implements Command{
     private int index;
+
+    /**
+     * Initialises Mark command
+     * @param index of the task in tasklist
+     */
     public MarkCommand(int index) {
         this.index = index;
     }
 
+    /**
+     * Marks the task as done
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);

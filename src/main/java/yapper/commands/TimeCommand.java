@@ -11,10 +11,21 @@ import java.time.LocalDateTime;
  */
 public class TimeCommand implements Command{
     private LocalDateTime time;
+
+    /**
+     * Initialises the Time command
+     * @param time
+     */
     public TimeCommand(LocalDateTime time) {
         this.time = time;
     }
 
+    /**
+     * Displays the tasks that are still active during the time
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.display("These tasks are still current:");

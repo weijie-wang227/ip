@@ -13,10 +13,21 @@ import java.io.IOException;
  */
 public class TodoCommand implements Command{
     private String desc;
+
+    /**
+     * Initialises todo command
+     * @param desc
+     */
     public TodoCommand(String desc) {
         this.desc = desc;
     }
 
+    /**
+     * Adds Todo task to task list
+     * @param tasks
+     * @param ui
+     * @param storage
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task todo = new Todo(desc);

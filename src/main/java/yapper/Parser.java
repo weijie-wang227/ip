@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
  */
 public class Parser {
 
+    /**
+     * Returns the Command corresponding to the userInput
+     * @param input
+     * @return Command
+     */
     public static Command parse(String input) {
         Matcher markMatcher = Pattern.compile("^mark(?:\\s+(\\d+))?$").matcher(input);
         Matcher unmarkMatcher = Pattern.compile("^unmark(?:\\s+(\\d+))?$").matcher(input);
@@ -23,7 +28,6 @@ public class Parser {
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
-
         if (markMatcher.matches()){
             String digit = markMatcher.group(1);
             if (digit == null) {
