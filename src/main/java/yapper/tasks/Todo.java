@@ -10,8 +10,8 @@ public class Todo extends Task {
         this.description = description;
     }
 
-    public Todo(String description, boolean done) {
-        super(description, done);
+    public Todo(String description, boolean isDone) {
+        super(description, isDone);
         this.description = description;
     }
 

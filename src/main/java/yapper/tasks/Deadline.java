@@ -8,14 +8,15 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     private LocalDateTime deadline;
     private String description;
-    public Deadline (String description, LocalDateTime deadline) {
+
+    public Deadline(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
         this.description = description;
     }
 
-    public Deadline (String description, LocalDateTime deadline, boolean done) {
-        super(description, done);
+    public Deadline(String description, LocalDateTime deadline, boolean isDone) {
+        super(description, isDone);
         this.deadline = deadline;
         this.description = description;
     }
@@ -32,7 +33,9 @@ public class Deadline extends Task {
     }
 
     @Override
-    public boolean isCurrent(LocalDateTime time) {return false;}
+    public boolean isCurrent(LocalDateTime time) {
+        return false;
+    }
 
     @Override
     public boolean equals(Object obj2) {

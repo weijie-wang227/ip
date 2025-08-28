@@ -1,5 +1,9 @@
 package yapper;
-import yapper.tasks.*;
+import yapper.tasks.Task;
+import yapper.tasks.TaskList;
+import yapper.tasks.Todo;
+import yapper.tasks.Deadline;
+import yapper.tasks.Event;
 
 import java.io.File;
 import java.io.FileNotFoundException;
