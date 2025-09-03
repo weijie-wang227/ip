@@ -8,11 +8,22 @@ import java.time.LocalDateTime;
 public class Todo extends Task {
     private String description;
 
+    /**
+     * Create a todo task with a secription
+     * 
+     * @param description
+     */
     public Todo(String description) {
         super(description);
         this.description = description;
     }
 
+    /**
+     * Create a todo task after loading from save file
+     * 
+     * @param description
+     * @param isDone      //Specify if task is done
+     */
     public Todo(String description, boolean isDone) {
         super(description, isDone);
         this.description = description;

@@ -7,11 +7,14 @@ import yapper.tasks.Deadline;
 import yapper.tasks.TaskList;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeadlineCommandTest {
+
+    /**
+     * Test if deadline task is created correctly
+     */
     @Test
     public void Test1() {
         TaskList tasks = new TaskList();

@@ -1,7 +1,5 @@
 package yapper.tasks;
 
-import yapper.commands.DeadlineCommand;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,12 +10,25 @@ public class Deadline extends Task {
     private LocalDateTime deadline;
     private String description;
 
+    /**
+     * Create a deadline task with description and deadline
+     * 
+     * @param description
+     * @param deadline
+     */
     public Deadline(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
         this.description = description;
     }
 
+    /**
+     * Create deadline task after loading from save file
+     * 
+     * @param description
+     * @param deadline
+     * @param isDone      //Specify whether task is done
+     */
     public Deadline(String description, LocalDateTime deadline, boolean isDone) {
         super(description, isDone);
         this.deadline = deadline;

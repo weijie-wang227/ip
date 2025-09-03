@@ -1,11 +1,22 @@
 package yapper;
-import yapper.commands.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import yapper.commands.Command;
+import yapper.commands.ByeCommand;
+import yapper.commands.DeadlineCommand;
+import yapper.commands.DeleteCommand;
+import yapper.commands.EventCommand;
+import yapper.commands.FindCommand;
+import yapper.commands.ListCommand;
+import yapper.commands.MarkCommand;
+import yapper.commands.TimeCommand;
+import yapper.commands.TodoCommand;
+import yapper.commands.UnmarkCommand;
 
 /**
  * Represent Parser used to parse user input to create commands
@@ -14,6 +25,7 @@ public class Parser {
 
     /**
      * Returns the Command corresponding to the userInput
+     * 
      * @param input
      * @return Command
      */
@@ -23,10 +35,10 @@ public class Parser {
         Matcher deleteMatcher = Pattern.compile("^delete\\s+(\\d+)$").matcher(input);
         Matcher todoMatcher = Pattern.compile("^todo(?:\\s+(.*))?$").matcher(input);
         Matcher deadlineMatcher = Pattern.compile("^deadline(?:\\s+(.+?))?(?:\\s*/by\\s+(.+))?$").matcher(input);
-        Matcher eventMatcher = Pattern.compile("^event(?:\\s+(.+?))?(?:\\s*/from\\s+(.+?))?(?:\\s*/to\\s+(.+))?$").matcher(input);
+        Matcher eventMatcher = Pattern.compile("^event(?:\\s+(.+?))?(?:\\s*/from\\s+(.+?))?(?:\\s*/to\\s+(.+))?$")
+                .matcher(input);
         Matcher timeMatcher = Pattern.compile("time\\s+(.+)").matcher(input);
         Matcher findMatcher = Pattern.compile("^find(?:\\s+(.*))?$").matcher(input);
-
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
 
@@ -74,7 +86,8 @@ public class Parser {
             String start = eventMatcher.group(2);
             String end = eventMatcher.group(3);
             if (desc == null || start == null || end == null) {
-                throw new InvalidInputException("OOPS!!! A event has to have a description, a start date and an end date");
+                throw new InvalidInputException(
+                        "OOPS!!! A event has to have a description, a start date and an end date");
             }
             try {
                 LocalDateTime startTime = LocalDateTime.parse(start, formatter);

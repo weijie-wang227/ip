@@ -11,6 +11,13 @@ public class Event extends Task {
     private LocalDateTime end;
     private String description;
 
+    /**
+     * Create an event task with a start and end time
+     * 
+     * @param description
+     * @param start
+     * @param end
+     */
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
         this.start = start;
@@ -18,6 +25,15 @@ public class Event extends Task {
         this.description = description;
     }
 
+    /**
+     * Create an event task after loading from file with option to set it to
+     * done
+     * 
+     * @param description
+     * @param start
+     * @param end
+     * @param isDone
+     */
     public Event(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
         super(description, isDone);
         this.start = start;
