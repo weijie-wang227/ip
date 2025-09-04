@@ -1,6 +1,8 @@
 package yapper;
+import javafx.application.Application;
 import yapper.commands.Command;
 import yapper.tasks.TaskList;
+import yapper.ui.Ui;
 
 /**
  * Main bot
@@ -32,7 +34,7 @@ public class YapperBot {
      * Runs program loop
      */
     public void run() {
-        ui.showWelcome();
+        /** ui.showWelcome();
         boolean isExit = false;
         while (!isExit) {
             try {
@@ -47,6 +49,7 @@ public class YapperBot {
                 ui.showLine();
             }
         }
+         */
     }
 
     /**
@@ -54,6 +57,7 @@ public class YapperBot {
      * @param args
      */
     public static void main(String[] args) {
+        Application.launch(Ui.class, args);
         new YapperBot("data/YapperBot.txt").run();
     }
 }

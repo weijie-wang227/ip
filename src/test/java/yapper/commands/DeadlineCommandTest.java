@@ -2,7 +2,7 @@ package yapper.commands;
 
 import org.junit.jupiter.api.Test;
 import yapper.Storage;
-import yapper.Ui;
+import yapper.ui.Ui;
 import yapper.tasks.Deadline;
 import yapper.tasks.TaskList;
 

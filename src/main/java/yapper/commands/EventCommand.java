@@ -1,7 +1,7 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.Ui;
+import yapper.ui.Ui;
 import yapper.tasks.Event;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
