@@ -1,4 +1,4 @@
-package yapper.ui;
+package yapper;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,21 +20,21 @@ import java.util.Scanner;
  */
 
 
-public class Ui extends Application{
+public class Main extends Application{
     private ScrollPane scrollPane;
     private VBox dialogContainer;
     private TextField userInput;
     private Button sendButton;
     private Scene scene;
     private YapperBot yapperBot;
-    private String DEFAULTPATH = "/data/YapperBot.txt";
+    private String DEFAULTFILEPATH = "data/YapperBot.txt";
 
     @Override
     public void start(Stage stage) throws Exception {
         scrollPane = new ScrollPane();
         dialogContainer = new VBox();
         scrollPane.setContent(dialogContainer);
-        yapperBot = new YapperBot(DEFAULTPATH);
+        yapperBot = new YapperBot(DEFAULTFILEPATH);
 
         userInput = new TextField();
         sendButton = new Button("Send");
@@ -50,6 +50,8 @@ public class Ui extends Application{
         stage.setResizable(false);
         stage.setMinHeight(600.0);
         stage.setMinWidth(400.0);
+        DialogBox.getDukeDialog("Hello! I'm YapperBot\n" +
+                "What can I do for you?\n");
 
         mainLayout.setPrefSize(400.0, 600.0);
 

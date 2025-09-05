@@ -79,7 +79,7 @@ public class Parser {
                 LocalDateTime dateTime = LocalDateTime.parse(end, formatter);
                 return new DeadlineCommand(desc, dateTime);
             } catch (DateTimeParseException e) {
-                throw new InvalidInputException("Invalid time format");
+                throw new InvalidInputException("Time has to be formatted as +: M/d/yyyy HHmm");
             }
         } else if (eventMatcher.matches()) {
             String desc = eventMatcher.group(1);
@@ -94,7 +94,7 @@ public class Parser {
                 LocalDateTime endTime = LocalDateTime.parse(end, formatter);
                 return new EventCommand(desc, startTime, endTime);
             } catch (DateTimeParseException e) {
-                throw new InvalidInputException("Invalid time format");
+                throw new InvalidInputException("Time has to be formatted as +: M/d/yyyy HHmm");
             }
         } else if (timeMatcher.matches()) {
             String text = timeMatcher.group(1);
@@ -102,7 +102,7 @@ public class Parser {
                 LocalDateTime time = LocalDateTime.parse(text, formatter);
                 return new TimeCommand(time);
             } catch (DateTimeParseException e) {
-                throw new InvalidInputException("Invalid time format");
+                throw new InvalidInputException("Time has to be formatted as +: M/d/yyyy HHmm");
             }
         } else if (findMatcher.matches()) {
             String keyword = findMatcher.group(1);

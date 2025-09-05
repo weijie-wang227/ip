@@ -29,15 +29,16 @@ public class TodoCommand implements Command{
      * @param storage
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task todo = new Todo(desc);
         tasks.add(todo);
-        ui.display(todo.forDisplay(tasks.size()));
+        String response = todo.forDisplay(tasks.size());
         try {
             storage.save(tasks);
         } catch (IOException e) {
-            ui.showError(e.getMessage());
+            return e.getMessage();
         }
+        return response;
     }
 
     @Override

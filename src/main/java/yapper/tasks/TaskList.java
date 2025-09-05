@@ -1,11 +1,16 @@
 package yapper.tasks;
 
+
 import yapper.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import java.util.stream.Collectors;
 
 /**
@@ -72,27 +77,6 @@ public class TaskList {
         tasks.remove(index);
     }
 
-    /**
-     * Execute a function on all tasks
-     * 
-     * @param consumer
-     */
-    public void foreach(Consumer<Task> consumer) {
-        for (Task task : tasks) {
-            consumer.accept(task);
-        }
-    }
-
-    /**
-     * Execute a function on all tasks with its index
-     * 
-     * @param biConsumer
-     */
-    public void foreachI(BiConsumer<Task, Integer> biConsumer) {
-        for (int i = 0; i < tasks.size(); i++) {
-            biConsumer.accept(tasks.get(i), i);
-        }
-    }
 
     @Override
     public boolean equals(Object obj2) {
@@ -109,7 +93,20 @@ public class TaskList {
 
     @Override
     public String toString() {
-        return tasks.toString();
+        return IntStream.range(1, tasks.size() + 1)
+                .mapToObj(i -> i + ". " + tasks.get(i - 1).toString()) // use i-1 since list is 0-based
+                .collect(Collectors.joining("\n"));
+    }
+
+    public String filterToString(Predicate<Task> predicate) {
+        return tasks.stream()
+                    .filter(predicate)
+                    .map(Task::toString)
+                    .collect(Collectors.joining("\n"));
+    }
+
+    public void foreach(Consumer<Task> consumer) {
+        tasks.stream().forEach(consumer);
     }
 
     /**

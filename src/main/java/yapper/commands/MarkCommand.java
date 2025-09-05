@@ -28,16 +28,16 @@ public class MarkCommand implements Command{
      * @param storage
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);
         task.mark();
-        ui.display("Ok, I've marked this task as done");
-        ui.display(task.toString());
+        String response = "Ok, I've marked this task as done" + task.toString();
         try {
             storage.save(tasks);
         } catch (IOException e) {
-            ui.showError(e.getMessage());
+            return e.getMessage();
         }
+        return response;
     }
 
     @Override

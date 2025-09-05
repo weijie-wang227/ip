@@ -14,7 +14,7 @@ public interface Command {
      * @param ui
      * @param storage
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage);
+    public String execute(TaskList tasks, Ui ui, Storage storage);
 
     /**
      * Returns if the command is the exit command

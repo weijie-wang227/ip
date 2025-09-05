@@ -28,16 +28,16 @@ public class DeleteCommand implements Command{
      * @param storage
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);
         tasks.remove(index);
-        ui.display("Ok, I've removed this task");
-        ui.display(task.deleteMessage(tasks.size()));
+        String message = "Ok, I've removed this task\n" + task.deleteMessage(tasks.size());
         try {
             storage.save(tasks);
         } catch (IOException e) {
-            ui.showError(e.getMessage());
+            return e.getMessage();
         }
+        return message;
     }
 
     @Override

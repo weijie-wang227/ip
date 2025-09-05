@@ -1,6 +1,7 @@
 package yapper.commands;
 
 import yapper.Storage;
+import yapper.tasks.Task;
 import yapper.ui.Ui;
 import yapper.tasks.TaskList;
 
@@ -27,9 +28,8 @@ public class TimeCommand implements Command{
      * @param storage
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.display("These tasks are still current:");
-        tasks.foreach(task -> {if(task.isCurrent(time)) {ui.display(task.toString());}});
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return "These tasks are still current:\n" + tasks.filterToString(task -> task.isCurrent(time));
     }
 
     @Override

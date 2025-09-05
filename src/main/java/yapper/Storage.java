@@ -118,6 +118,7 @@ public class Storage {
         try (FileWriter writer = new FileWriter(fileName)) {
             tasks.foreach(task -> {
                 try {
+                    System.out.println(task.toString());
                     writer.write(task.saveState());
                 } catch (IOException e) {
                     throw new RuntimeException(e);

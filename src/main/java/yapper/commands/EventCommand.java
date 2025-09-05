@@ -36,15 +36,16 @@ public class EventCommand implements Command{
      * @param storage
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task event = new Event(desc, start, end);
         tasks.add(event);
-        ui.display(event.forDisplay(tasks.size()));
+        String message = event.forDisplay(tasks.size());
         try {
             storage.save(tasks);
         } catch (IOException e) {
-            ui.showError(e.getMessage());
+            return e.getMessage();
         }
+        return message;
     }
 
     @Override

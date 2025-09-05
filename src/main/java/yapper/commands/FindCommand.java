@@ -11,9 +11,8 @@ public class FindCommand implements Command{
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.display("Here are the matching tasks in your list:");
-        ui.displayList(tasks.search(keyword));
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return "Here are the matching tasks in your list:\n" + tasks.search(keyword);
     }
 
     @Override

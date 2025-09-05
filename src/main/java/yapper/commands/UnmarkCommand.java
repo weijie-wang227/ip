@@ -28,16 +28,16 @@ public class UnmarkCommand implements Command{
      * @param storage
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);
         task.unmark();
-        ui.display("Ok, I've marked this task as not done yet");
-        ui.display(task.toString());
+        String response = "Ok, I've marked this task as not done yet";
         try {
             storage.save(tasks);
         } catch (IOException e) {
-            ui.showError(e.getMessage());
+            return e.getMessage();
         }
+        return response;
     }
 
     @Override
