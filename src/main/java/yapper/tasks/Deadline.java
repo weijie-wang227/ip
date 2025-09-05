@@ -12,7 +12,6 @@ public class Deadline extends Task {
 
     /**
      * Create a deadline task with description and deadline
-     * 
      * @param description
      * @param deadline
      */
@@ -24,7 +23,6 @@ public class Deadline extends Task {
 
     /**
      * Create deadline task after loading from save file
-     * 
      * @param description
      * @param deadline
      * @param isDone      //Specify whether task is done

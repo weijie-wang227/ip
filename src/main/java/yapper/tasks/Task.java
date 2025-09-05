@@ -11,7 +11,6 @@ public abstract class Task {
 
     /**
      * Create Task with description
-     * 
      * @param description
      */
     public Task(String description) {
@@ -21,7 +20,6 @@ public abstract class Task {
 
     /**
      * Create task after loading from file
-     * 
      * @param description
      * @param isDone      //specify whether task is done
      */
@@ -46,7 +44,6 @@ public abstract class Task {
 
     /**
      * Check if task is done
-     * 
      * @return
      */
     public boolean isDone() {
@@ -64,38 +61,34 @@ public abstract class Task {
 
     /**
      * Return message for adding task
-     * 
      * @param size
      * @return
      */
     public String forDisplay(int size) {
-        return "Got it. I've added this task:\n  " +
-                toString() +
-                "\nNow you have " + size + " in the list";
+        return "Got it. I've added this task:\n  "
+                + toString()
+                + "\nNow you have " + size + " in the list";
     }
 
     /**
      * Return message for deleting task
-     * 
      * @param size
      * @return
      */
     public String deleteMessage(int size) {
-        return "Noted. I've removed this task:\n  " +
-                toString() +
-                "\nNow you have " + size + " in the list";
+        return "Noted. I've removed this task:\n  "
+                + toString()
+                + "\nNow you have " + size + " in the list";
     }
 
     /**
      * Return a string used to save task
-     * 
      * @return
      */
     public abstract String saveState();
 
     /**
      * Check if task is still open at a given time
-     * 
      * @param time
      * @return
      */
@@ -103,7 +96,6 @@ public abstract class Task {
 
     /**
      * Check if task description contains a keyword
-     * 
      * @param keyword
      * @return
      */

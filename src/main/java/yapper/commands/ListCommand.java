@@ -6,7 +6,7 @@ import yapper.tasks.TaskList;
 /**
  * Represent the command used to list all the tasks in Task List
  */
-public class ListCommand implements Command{
+public class ListCommand implements Command {
 
     /**
      * List out all the tasks in tasklist

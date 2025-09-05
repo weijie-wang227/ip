@@ -6,8 +6,8 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import yapper.commands.Command;
 import yapper.commands.ByeCommand;
+import yapper.commands.Command;
 import yapper.commands.DeadlineCommand;
 import yapper.commands.DeleteCommand;
 import yapper.commands.EventCommand;
@@ -25,7 +25,6 @@ public class Parser {
 
     /**
      * Returns the Command corresponding to the userInput
-     * 
      * @param input
      * @return Command
      */

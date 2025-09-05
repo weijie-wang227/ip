@@ -1,15 +1,17 @@
 package yapper.commands;
 
+import java.io.IOException;
+
 import yapper.Storage;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
 
-import java.io.IOException;
+
 
 /**
  * Represent Command used to delete a task from the Task List
  */
-public class DeleteCommand implements Command{
+public class DeleteCommand implements Command {
     private int index;
 
     /**
@@ -23,7 +25,6 @@ public class DeleteCommand implements Command{
     /**
      * Deletes the task from tasklist
      * @param tasks
-     * @param ui
      * @param storage
      */
     @Override

@@ -1,17 +1,13 @@
 package yapper.tasks;
 
-
-import yapper.InvalidInputException;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import java.util.stream.Collectors;
+import yapper.InvalidInputException;
 
 /**
  * Represent a list used to store all the tasks
@@ -21,7 +17,6 @@ public class TaskList {
 
     /**
      * Create tasklist with already specified tasks
-     * 
      * @param tasks
      */
     public TaskList(List<Task> tasks) {
@@ -37,7 +32,6 @@ public class TaskList {
 
     /**
      * Add task to tasklist
-     * 
      * @param task
      */
     public void add(Task task) {
@@ -46,7 +40,6 @@ public class TaskList {
 
     /**
      * Return number of tasks
-     * 
      * @return
      */
     public int size() {
@@ -55,7 +48,6 @@ public class TaskList {
 
     /**
      * Fetch task from tasklist
-     * 
      * @param index
      * @return
      * @throws InvalidInputException
@@ -70,7 +62,6 @@ public class TaskList {
 
     /**
      * Remove task of specified index
-     * 
      * @param index
      */
     public void remove(int index) {
@@ -116,7 +107,6 @@ public class TaskList {
 
     /**
      * Search the tasklist for task containing keyword
-     * 
      * @param keyword
      * @return
      */

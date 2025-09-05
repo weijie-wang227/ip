@@ -13,7 +13,6 @@ public class Event extends Task {
 
     /**
      * Create an event task with a start and end time
-     * 
      * @param description
      * @param start
      * @param end
@@ -28,7 +27,6 @@ public class Event extends Task {
     /**
      * Create an event task after loading from file with option to set it to
      * done
-     * 
      * @param description
      * @param start
      * @param end

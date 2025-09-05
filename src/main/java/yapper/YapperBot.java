@@ -28,8 +28,7 @@ public class YapperBot {
     public String getResponse(String userInput) {
         try {
             Command c = Parser.parse(userInput);
-            String response = c.execute(tasks, storage);
-            return response;
+            return c.execute(tasks, storage);
         } catch (InvalidInputException e) {
             return e.getMessage();
         }

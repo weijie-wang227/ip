@@ -1,14 +1,15 @@
 package yapper.commands;
 
+import java.time.LocalDateTime;
+
 import yapper.Storage;
 import yapper.tasks.TaskList;
 
-import java.time.LocalDateTime;
 
 /**
  * Represent command used to list all the task that are still available for a specified time
  */
-public class TimeCommand implements Command{
+public class TimeCommand implements Command {
     private LocalDateTime time;
 
     /**

@@ -10,7 +10,6 @@ public interface Command {
     /**
      * Executes the command
      * @param tasks
-     * @param ui
      * @param storage
      */
     public String execute(TaskList tasks, Storage storage);

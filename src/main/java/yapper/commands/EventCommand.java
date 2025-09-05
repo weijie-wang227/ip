@@ -1,17 +1,19 @@
 package yapper.commands;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+
 import yapper.Storage;
 import yapper.tasks.Event;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
+
 
 /**
- * Represent Command used to create Event Task
+ * Represents Command used to create Event Task
  */
-public class EventCommand implements Command{
+public class EventCommand implements Command {
     private String desc;
     private LocalDateTime start;
     private LocalDateTime end;
@@ -31,7 +33,6 @@ public class EventCommand implements Command{
     /**
      * Adds a Event task to tasklist
      * @param tasks
-     * @param ui
      * @param storage
      */
     @Override

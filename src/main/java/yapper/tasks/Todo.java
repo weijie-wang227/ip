@@ -9,8 +9,7 @@ public class Todo extends Task {
     private String description;
 
     /**
-     * Create a todo task with a secription
-     * 
+     * Create a todo task with a description
      * @param description
      */
     public Todo(String description) {
@@ -20,7 +19,6 @@ public class Todo extends Task {
 
     /**
      * Create a todo task after loading from save file
-     * 
      * @param description
      * @param isDone      //Specify if task is done
      */

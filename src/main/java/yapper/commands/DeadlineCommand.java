@@ -1,17 +1,17 @@
 package yapper.commands;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+
 import yapper.Storage;
 import yapper.tasks.Deadline;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-
 /**
  * Represent the command used to create the Deadline task
  */
-public class DeadlineCommand implements Command{
+public class DeadlineCommand implements Command {
     private String desc;
     private LocalDateTime time;
 
@@ -28,7 +28,6 @@ public class DeadlineCommand implements Command{
     /**
      * Creates Deadline and add to tasklist
      * @param tasks
-     * @param ui
      * @param storage
      */
     @Override

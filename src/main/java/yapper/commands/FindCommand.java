@@ -3,7 +3,10 @@ package yapper.commands;
 import yapper.Storage;
 import yapper.tasks.TaskList;
 
-public class FindCommand implements Command{
+/**
+ * Represents Command used to find task using keyword
+ */
+public class FindCommand implements Command {
     private String keyword;
     public FindCommand(String keyword) {
         this.keyword = keyword;

@@ -1,16 +1,17 @@
 package yapper.commands;
 
+import java.io.IOException;
+
 import yapper.Storage;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
 import yapper.tasks.Todo;
 
-import java.io.IOException;
 
 /**
  * Represent Command Used to create the Todo task
  */
-public class TodoCommand implements Command{
+public class TodoCommand implements Command {
     private String desc;
 
     /**

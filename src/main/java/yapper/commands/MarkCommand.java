@@ -1,15 +1,16 @@
 package yapper.commands;
 
-import yapper.Storage;
-import yapper.tasks.TaskList;
-import yapper.tasks.Task;
-
 import java.io.IOException;
+
+import yapper.Storage;
+import yapper.tasks.Task;
+import yapper.tasks.TaskList;
+
 
 /**
  * Represent command used to mark the task as done
  */
-public class MarkCommand implements Command{
+public class MarkCommand implements Command {
     private int index;
 
     /**

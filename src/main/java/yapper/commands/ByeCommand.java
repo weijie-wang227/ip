@@ -6,7 +6,7 @@ import yapper.tasks.TaskList;
 /**
  * Represents the exit command by using bye
  */
-public class ByeCommand implements Command{
+public class ByeCommand implements Command {
     @Override
     public String execute(TaskList tasks, Storage storage) {
         return "Bye. Hope to see you again soon!";

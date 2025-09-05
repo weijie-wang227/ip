@@ -1,13 +1,16 @@
 package yapper.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
+
 import yapper.Storage;
 import yapper.tasks.Deadline;
 import yapper.tasks.TaskList;
 
-import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeadlineCommandTest {
 
@@ -15,7 +18,7 @@ public class DeadlineCommandTest {
      * Test if deadline task is created correctly
      */
     @Test
-    public void Test1() {
+    public void testDeadline() {
         TaskList tasks = new TaskList();
         TaskList tasks2 = new TaskList();
         Storage storage = new Storage("data/YapperBot.txt");
