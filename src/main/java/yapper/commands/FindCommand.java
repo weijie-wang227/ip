@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.TaskList;
 
 public class FindCommand implements Command{
@@ -11,7 +10,7 @@ public class FindCommand implements Command{
     }
 
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         return "Here are the matching tasks in your list:\n" + tasks.search(keyword);
     }
 

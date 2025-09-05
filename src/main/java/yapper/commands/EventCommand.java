@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.Event;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
@@ -36,7 +35,7 @@ public class EventCommand implements Command{
      * @param storage
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         Task event = new Event(desc, start, end);
         tasks.add(event);
         String message = event.forDisplay(tasks.size());

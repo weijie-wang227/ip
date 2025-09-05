@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.TaskList;
 import yapper.tasks.Task;
 
@@ -24,11 +23,10 @@ public class MarkCommand implements Command{
     /**
      * Marks the task as done
      * @param tasks
-     * @param ui
      * @param storage
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         Task task = tasks.get(index);
         task.mark();
         String response = "Ok, I've marked this task as done" + task.toString();

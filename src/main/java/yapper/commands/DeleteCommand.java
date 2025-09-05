@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
 
@@ -28,7 +27,7 @@ public class DeleteCommand implements Command{
      * @param storage
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         Task task = tasks.get(index);
         tasks.remove(index);
         String message = "Ok, I've removed this task\n" + task.deleteMessage(tasks.size());

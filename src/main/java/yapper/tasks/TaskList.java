@@ -98,6 +98,11 @@ public class TaskList {
                 .collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Return list representation as a string after filtering using predicate
+     * @param predicate
+     * @return
+     */
     public String filterToString(Predicate<Task> predicate) {
         return tasks.stream()
                     .filter(predicate)

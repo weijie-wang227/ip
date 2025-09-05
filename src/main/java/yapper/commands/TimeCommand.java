@@ -1,8 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.tasks.Task;
-import yapper.ui.Ui;
 import yapper.tasks.TaskList;
 
 import java.time.LocalDateTime;
@@ -24,11 +22,10 @@ public class TimeCommand implements Command{
     /**
      * Displays the tasks that are still active during the time
      * @param tasks
-     * @param ui
      * @param storage
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         return "These tasks are still current:\n" + tasks.filterToString(task -> task.isCurrent(time));
     }
 

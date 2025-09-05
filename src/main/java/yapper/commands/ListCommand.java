@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.TaskList;
 
 /**
@@ -12,11 +11,10 @@ public class ListCommand implements Command{
     /**
      * List out all the tasks in tasklist
      * @param tasks
-     * @param ui
      * @param storage
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         return tasks.toString();
     }
 

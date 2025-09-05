@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.Deadline;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
@@ -33,7 +32,7 @@ public class DeadlineCommand implements Command{
      * @param storage
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         Task deadline = new Deadline(desc, time);
         tasks.add(deadline);
         String response = deadline.forDisplay(tasks.size());

@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.TaskList;
 
 /**
@@ -14,7 +13,7 @@ public interface Command {
      * @param ui
      * @param storage
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage);
+    public String execute(TaskList tasks, Storage storage);
 
     /**
      * Returns if the command is the exit command

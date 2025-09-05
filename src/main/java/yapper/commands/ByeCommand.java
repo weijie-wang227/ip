@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.TaskList;
 
 /**
@@ -9,7 +8,7 @@ import yapper.tasks.TaskList;
  */
 public class ByeCommand implements Command{
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         return "Bye. Hope to see you again soon!";
     }
 

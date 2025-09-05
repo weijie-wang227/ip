@@ -1,7 +1,6 @@
 package yapper.commands;
 
 import yapper.Storage;
-import yapper.ui.Ui;
 import yapper.tasks.Task;
 import yapper.tasks.TaskList;
 import yapper.tasks.Todo;
@@ -25,11 +24,10 @@ public class TodoCommand implements Command{
     /**
      * Adds Todo task to task list
      * @param tasks
-     * @param ui
      * @param storage
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         Task todo = new Todo(desc);
         tasks.add(todo);
         String response = todo.forDisplay(tasks.size());
