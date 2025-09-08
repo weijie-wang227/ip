@@ -13,7 +13,7 @@ public class YapperBot {
 
     /**
      * Initialises YapperBot with a new UI and Storage
-     * @param filePath
+     * @param filePath //Path to save file
      */
     public YapperBot(String filePath) {
         storage = new Storage(filePath);
@@ -22,8 +22,8 @@ public class YapperBot {
 
     /**
      * Returns response of YapperBot in response to userInput
-     * @param userInput
-     * @return
+     * @param userInput //User's input
+     * @return //Return string to be shown to user
      */
     public String getResponse(String userInput) {
         try {

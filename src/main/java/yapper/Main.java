@@ -17,7 +17,7 @@ import yapper.ui.MainWindow;
 public class Main extends Application {
     private final String defaultFilePath = "data/YapperBot.txt";
 
-    private final YapperBot yapperBot = new YapperBot(DEFAULTFILEPATH);
+    private final YapperBot yapperBot = new YapperBot(defaultFilePath);
 
     @Override
     public void start(Stage stage) {
@@ -26,7 +26,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDuke(yapperBot);
+            fxmlLoader.<MainWindow>getController().setYapper(yapperBot);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

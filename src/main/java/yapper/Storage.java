@@ -56,8 +56,8 @@ public class Storage {
     }
 
     /**
-     * Reads from file into tasklist
-     * @return
+     * Reads from file into task list
+     * @return //List of tasks to create a task list
      */
     public List<Task> load() {
         try (Scanner scanner = new Scanner(new File(fileName))) {
@@ -74,6 +74,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Decode line from save file to recover tasks
+     * @param line //String representation from save file
+     * @return //The task corresponding to the save file representation
+     */
     private Task decode(String line) {
         Pattern pattern = Pattern.compile("^T\\s*\\|\\s*(\\d+)\\s*\\|\\s*(.+)$");
         Matcher matcher = pattern.matcher(line);
@@ -111,9 +116,7 @@ public class Storage {
     }
 
     /**
-     * Writes into the file to update tasklist
-     * @param tasks
-     * @throws IOException
+     * Writes into the file to update task ist
      */
     public void save(TaskList tasks) throws IOException {
         try (FileWriter writer = new FileWriter(fileName)) {
