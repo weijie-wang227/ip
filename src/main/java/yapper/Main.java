@@ -17,16 +17,18 @@ import yapper.ui.MainWindow;
 public class Main extends Application {
     private final String defaultFilePath = "data/YapperBot.txt";
 
-    private final YapperBot yapperBot = new YapperBot(DEFAULTFILEPATH);
+    private final YapperBot yapperBot = new YapperBot(defaultFilePath);
 
     @Override
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            assert Main.class.getResource("/view/MainWindow.fxml") != null : "MainWindow.fxml not found in /view/";
             AnchorPane ap = fxmlLoader.load();
+            assert ap != null : "FXML loading failed: AnchorPane is null";
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDuke(yapperBot);
+            fxmlLoader.<MainWindow>getController().setYapper(yapperBot);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
