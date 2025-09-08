@@ -83,6 +83,7 @@ public class Storage {
         Pattern pattern = Pattern.compile("^T\\s*\\|\\s*(\\d+)\\s*\\|\\s*(.+)$");
         Matcher matcher = pattern.matcher(line);
         if (matcher.matches()) {
+            assert matcher.groupCount() == 2 : "Todo regex should capture 2 groups";
             String number = matcher.group(1);
             String description = matcher.group(2);
             return new Todo(description, Objects.equals(number, "1"));
@@ -91,6 +92,7 @@ public class Storage {
         pattern = Pattern.compile("^D\\s*\\|\\s*(\\d+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*(.+)$");
         matcher = pattern.matcher(line);
         if (matcher.matches()) {
+            assert matcher.groupCount() == 3 : "Deadline regex should capture 3 groups";
             String number = matcher.group(1);
             String description = matcher.group(2);
             String deadline = matcher.group(3);
@@ -102,6 +104,7 @@ public class Storage {
         pattern = Pattern.compile("^E\\s*\\|\\s*(\\d+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*(.+?)\\s*-\\s*(.+)$");
         matcher = pattern.matcher(line);
         if (matcher.matches()) {
+            assert matcher.groupCount() == 4 : "Event regex should capture 4 groups";
             String number = matcher.group(1);
             String description = matcher.group(2);
             String from = matcher.group(3);
