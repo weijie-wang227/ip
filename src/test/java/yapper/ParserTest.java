@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import yapper.commands.EventCommand;
 import yapper.commands.UnmarkCommand;
 
+/**
+ * Representing tester for parser
+ */
 public class ParserTest {
 
     /**
@@ -17,7 +20,7 @@ public class ParserTest {
      */
     @Test
     public void testUnmark() {
-        assertEquals(Parser.parse("unmark 2"), new UnmarkCommand(1));
+        assertEquals(new UnmarkCommand(1), Parser.parse("unmark 2"));
     }
 
     /**

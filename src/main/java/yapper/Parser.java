@@ -25,7 +25,6 @@ public class Parser {
 
     /**
      * Returns the Command corresponding to the userInput
-     * @param input
      * @return Command
      */
     public static Command parse(String input) {
