@@ -28,7 +28,9 @@ public class YapperBot {
     public String getResponse(String userInput) {
         try {
             Command c = Parser.parse(userInput);
-            return c.execute(tasks, storage);
+            String response = c.execute(tasks, storage);
+            assert response != null : "Command execution should never return null response";
+            return response;
         } catch (InvalidInputException e) {
             return e.getMessage();
         }

@@ -29,7 +29,7 @@ public class MainWindow extends AnchorPane {
     }
 
     /** Injects the Duke instance */
-    public void setDuke(YapperBot y) {
+    public void setYapper(YapperBot y) {
         yapperBot = y;
     }
 

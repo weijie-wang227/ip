@@ -29,6 +29,7 @@ public class Parser {
      * @return Command
      */
     public static Command parse(String input) {
+        input = input.trim();
         Matcher markMatcher = Pattern.compile("^mark(?:\\s+(\\d+))?$").matcher(input);
         Matcher unmarkMatcher = Pattern.compile("^unmark(?:\\s+(\\d+))?$").matcher(input);
         Matcher deleteMatcher = Pattern.compile("^delete\\s+(\\d+)$").matcher(input);
@@ -42,6 +43,7 @@ public class Parser {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
 
         if (markMatcher.matches()) {
+            assert markMatcher.groupCount() == 1 : "Mark regex should only have 1 group";
             String digit = markMatcher.group(1);
             if (digit == null) {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
@@ -49,6 +51,7 @@ public class Parser {
             int index = Integer.parseInt(digit) - 1;
             return new MarkCommand(index);
         } else if (unmarkMatcher.matches()) {
+            assert markMatcher.groupCount() == 1 : "Unmark regex should only have 1 group";
             String digit = unmarkMatcher.group(1);
             if (digit == null) {
                 throw new InvalidInputException("OOPS!!! The index cannot be empty");
