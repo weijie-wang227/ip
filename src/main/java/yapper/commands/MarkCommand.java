@@ -30,7 +30,7 @@ public class MarkCommand implements Command {
     public String execute(TaskList tasks, Storage storage) {
         Task task = tasks.get(index);
         task.mark();
-        String response = "Ok, I've marked this task as done" + task.toString();
+        String response = "Ok, I've marked this task as done\n" + task.toString();
         try {
             storage.save(tasks);
         } catch (IOException e) {

@@ -36,25 +36,7 @@ public class Storage {
     public Storage(String saveFile, String archiveFile) {
         this.fileName = saveFile;
         this.archiveName = archiveFile;
-        File file = new File(fileName);
-        File dir = file.getParentFile();
-        if (!dir.exists()) {
-            if (dir.mkdir()) {
-                System.out.println("Directory created: " + dir);
-            } else {
-                throw new RuntimeException("Failed to create Directory");
-            }
-        }
-
-        try {
-            if (file.createNewFile()) {
-                System.out.println("Save File created: " + fileName);
-            } else {
-                System.out.println("Save File already exits");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ensureFileExists(fileName, "Save");
     }
 
     /**
@@ -62,18 +44,7 @@ public class Storage {
      * @return //List of tasks to create a task list
      */
     public List<Task> load() {
-        try (Scanner scanner = new Scanner(new File(fileName))) {
-            List<Task> taskList = new ArrayList<Task>();
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Task task = decode(line);
-                taskList.add(task);
-                System.out.println(task + " loaded");
-            }
-            return taskList;
-        } catch (FileNotFoundException | InvalidInputException | DateTimeParseException e) {
-            throw new RuntimeException(e);
-        }
+        return loadFromFile(fileName);
     }
 
     /**
@@ -124,44 +95,55 @@ public class Storage {
      * Writes into the file to update task ist
      */
     public void save(TaskList tasks) throws IOException {
-        try (FileWriter writer = new FileWriter(fileName)) {
-            tasks.foreach(task -> {
-                try {
-                    System.out.println(task.toString());
-                    writer.write(task.saveState());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
+        writeToFile(fileName, tasks);
     }
 
     /**
      * Makes a new archive file if it does not exist and save the current list into the archive
      */
     public void saveArchive(TaskList tasks) throws IOException {
-        File archiveFile = new File(archiveName);
-        File archiveDir = archiveFile.getParentFile();
-        if (!archiveDir.exists()) {
-            if (archiveDir.mkdir()) {
-                System.out.println("Archive created: " + archiveDir);
-            } else {
-                throw new RuntimeException("Failed to create Archive");
-            }
+        ensureFileExists(archiveName, "Archive");
+        writeToFile(archiveName, tasks);
+    }
+
+    /**
+     * Returns a taskList from the archive
+     */
+    public List<Task> loadArchive() {
+        return loadFromFile(archiveName);
+    }
+
+    private void ensureFileExists(String path, String name) {
+        File file = new File(path);
+        File dir = file.getParentFile();
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new RuntimeException("Failed to create directory: " + dir);
         }
-        assert archiveDir.exists() : "Archive not created";
         try {
-            if (archiveFile.createNewFile()) {
-                System.out.println("Archive File created: " + fileName);
-            } else {
-                System.out.println("Archive File already exits");
+            if (file.createNewFile()) {
+                System.out.println(name + " created: " + file);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to create " + name + ": " + path, e);
         }
-        assert archiveFile.exists();
+    }
 
-        try (FileWriter writer = new FileWriter(archiveName)) {
+    private List<Task> loadFromFile(String path) {
+        try (Scanner scanner = new Scanner(new File(path))) {
+            List<Task> taskList = new ArrayList<>();
+            while (scanner.hasNextLine()) {
+                Task task = decode(scanner.nextLine());
+                taskList.add(task);
+                System.out.println(task + " loaded");
+            }
+            return taskList;
+        } catch (FileNotFoundException | InvalidInputException | DateTimeParseException e) {
+            throw new RuntimeException("Failed to load tasks from " + path, e);
+        }
+    }
+
+    private void writeToFile(String path, TaskList tasks) throws IOException {
+        try (FileWriter writer = new FileWriter(path)) {
             tasks.foreach(task -> {
                 try {
                     writer.write(task.saveState());
@@ -169,24 +151,6 @@ public class Storage {
                     throw new RuntimeException(e);
                 }
             });
-        }
-    }
-
-    /**
-     * Returns a taskList from the archive
-     */
-    public List<Task> loadArchive() {
-        try (Scanner scanner = new Scanner(new File(archiveName))) {
-            List<Task> taskList = new ArrayList<Task>();
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Task task = decode(line);
-                taskList.add(task);
-                System.out.println(task + " loaded");
-            }
-            return taskList;
-        } catch (FileNotFoundException | InvalidInputException | DateTimeParseException e) {
-            throw new RuntimeException(e);
         }
     }
 }
