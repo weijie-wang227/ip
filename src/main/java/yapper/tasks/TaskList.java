@@ -101,4 +101,20 @@ public class TaskList {
                 .filter(task -> task.hasKeyword(keyword))
                 .collect(Collectors.toList()));
     }
+
+    /**
+     * Empty current tasklist
+     */
+    public void empty() {
+        tasks.clear();
+        assert tasks.isEmpty() : "Tasks not emptied";
+    }
+
+    /**
+     * Adds new tasks into tasklist
+     * @param newTasks
+     */
+    public void append(List<Task> newTasks) {
+        tasks.addAll(newTasks);
+    }
 }

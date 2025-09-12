@@ -15,8 +15,8 @@ public class YapperBot {
      * Initialises YapperBot with a new UI and Storage
      * @param filePath //Path to save file
      */
-    public YapperBot(String filePath) {
-        storage = new Storage(filePath);
+    public YapperBot(String filePath, String archivePath) {
+        storage = new Storage(filePath, archivePath);
         tasks = new TaskList(storage.load());
     }
 

@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import yapper.commands.ArchiveCommand;
 import yapper.commands.ByeCommand;
 import yapper.commands.Command;
 import yapper.commands.DeadlineCommand;
@@ -13,6 +14,7 @@ import yapper.commands.DeleteCommand;
 import yapper.commands.EventCommand;
 import yapper.commands.FindCommand;
 import yapper.commands.ListCommand;
+import yapper.commands.LoadCommand;
 import yapper.commands.MarkCommand;
 import yapper.commands.TimeCommand;
 import yapper.commands.TodoCommand;
@@ -115,6 +117,10 @@ public class Parser {
             return new ListCommand();
         } else if (input.equals("bye")) {
             return new ByeCommand();
+        } else if (input.equals("archive")) {
+            return new ArchiveCommand();
+        } else if (input.equals("load")) {
+            return new LoadCommand();
         }
 
         throw new InvalidInputException();
