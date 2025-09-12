@@ -16,23 +16,21 @@ public class TaskList {
     private List<Task> tasks;
 
     /**
-     * Create tasklist with already specified tasks
-     * @param tasks
+     * Create task list with already specified tasks
      */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
 
     /**
-     * Create new empty tasklist
+     * Create new empty task list
      */
     public TaskList() {
         tasks = new ArrayList<>();
     }
 
     /**
-     * Add task to tasklist
-     * @param task
+     * Add task to task list
      */
     public void add(Task task) {
         tasks.add(task);
@@ -40,7 +38,6 @@ public class TaskList {
 
     /**
      * Return number of tasks
-     * @return
      */
     public int size() {
         return tasks.size();
@@ -48,9 +45,6 @@ public class TaskList {
 
     /**
      * Fetch task from tasklist
-     * @param index
-     * @return
-     * @throws InvalidInputException
      */
     public Task get(int index) throws InvalidInputException {
         if (index >= size() || index < 0) {
@@ -62,21 +56,17 @@ public class TaskList {
 
     /**
      * Remove task of specified index
-     * @param index
      */
     public void remove(int index) {
         tasks.remove(index);
     }
 
 
+    @SuppressWarnings("checkstyle:WhitespaceAfter")
     @Override
     public boolean equals(Object obj2) {
         if (obj2 instanceof TaskList) {
-            TaskList tasklist2 = (TaskList) obj2;
-            System.out.println(get(0).equals(tasklist2.get(0)));
-            System.out.println(get(0));
-            System.out.println(tasklist2.get(0));
-            return tasks.equals(tasklist2.tasks);
+            return tasks.equals(((TaskList) obj2).tasks);
         } else {
             return false;
         }
@@ -90,9 +80,7 @@ public class TaskList {
     }
 
     /**
-     * Return list representation as a string after filtering using predicate
-     * @param predicate
-     * @return
+     * Return String representation of list after filtering using predicate
      */
     public String filterToString(Predicate<Task> predicate) {
         return tasks.stream()
@@ -102,17 +90,31 @@ public class TaskList {
     }
 
     public void foreach(Consumer<Task> consumer) {
-        tasks.stream().forEach(consumer);
+        tasks.forEach(consumer);
     }
 
     /**
-     * Search the tasklist for task containing keyword
-     * @param keyword
-     * @return
+     * Search the task list for task containing keyword
      */
     public TaskList search(String keyword) {
         return new TaskList(tasks.stream()
                 .filter(task -> task.hasKeyword(keyword))
                 .collect(Collectors.toList()));
+    }
+
+    /**
+     * Empty current tasklist
+     */
+    public void empty() {
+        tasks.clear();
+        assert tasks.isEmpty() : "Tasks not emptied";
+    }
+
+    /**
+     * Adds new tasks into tasklist
+     * @param newTasks
+     */
+    public void append(List<Task> newTasks) {
+        tasks.addAll(newTasks);
     }
 }

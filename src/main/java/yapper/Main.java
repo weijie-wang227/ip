@@ -16,8 +16,9 @@ import yapper.ui.MainWindow;
 
 public class Main extends Application {
     private final String defaultFilePath = "data/YapperBot.txt";
+    private final String defaultArchivePath = "data/Archive.txt";
 
-    private final YapperBot yapperBot = new YapperBot(defaultFilePath);
+    private final YapperBot yapperBot = new YapperBot(defaultFilePath, defaultArchivePath);
 
     @Override
     public void start(Stage stage) {

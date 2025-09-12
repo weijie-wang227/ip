@@ -27,13 +27,15 @@ import yapper.tasks.Todo;
 public class Storage {
 
     private final String fileName;
+    private final String archiveName;
 
     /**
      * Adds a new file if it doesn't exist
-     * @param fileName path to file
+     * @param saveFile path to file
      */
-    public Storage(String fileName) {
-        this.fileName = fileName;
+    public Storage(String saveFile, String archiveFile) {
+        this.fileName = saveFile;
+        this.archiveName = archiveFile;
         File file = new File(fileName);
         File dir = file.getParentFile();
         if (!dir.exists()) {
@@ -134,4 +136,57 @@ public class Storage {
         }
     }
 
+    /**
+     * Makes a new archive file if it does not exist and save the current list into the archive
+     */
+    public void saveArchive(TaskList tasks) throws IOException {
+        File archiveFile = new File(archiveName);
+        File archiveDir = archiveFile.getParentFile();
+        if (!archiveDir.exists()) {
+            if (archiveDir.mkdir()) {
+                System.out.println("Archive created: " + archiveDir);
+            } else {
+                throw new RuntimeException("Failed to create Archive");
+            }
+        }
+        assert archiveDir.exists() : "Archive not created";
+        try {
+            if (archiveFile.createNewFile()) {
+                System.out.println("Archive File created: " + fileName);
+            } else {
+                System.out.println("Archive File already exits");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert archiveFile.exists();
+
+        try (FileWriter writer = new FileWriter(archiveName)) {
+            tasks.foreach(task -> {
+                try {
+                    writer.write(task.saveState());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+    }
+
+    /**
+     * Returns a taskList from the archive
+     */
+    public List<Task> loadArchive() {
+        try (Scanner scanner = new Scanner(new File(archiveName))) {
+            List<Task> taskList = new ArrayList<Task>();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                Task task = decode(line);
+                taskList.add(task);
+                System.out.println(task + " loaded");
+            }
+            return taskList;
+        } catch (FileNotFoundException | InvalidInputException | DateTimeParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
