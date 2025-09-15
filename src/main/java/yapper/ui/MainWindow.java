@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import yapper.YapperBot;
@@ -22,6 +23,9 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private YapperBot yapperBot;
+
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
+    private Image yapperImage = new Image(this.getClass().getResourceAsStream("/images/yapper.jpg"));
 
     @FXML
     public void initialize() {
@@ -42,8 +46,8 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = yapperBot.getResponse(input);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input),
-                DialogBox.getYapperDialog(response)
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getYapperDialog(response, yapperImage)
         );
         userInput.clear();
     }

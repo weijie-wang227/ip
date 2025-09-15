@@ -92,7 +92,7 @@ public class Storage {
     }
 
     /**
-     * Writes into the file to update task ist
+     * Writes into the file to update task list
      */
     public void save(TaskList tasks) throws IOException {
         writeToFile(fileName, tasks);
