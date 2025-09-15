@@ -3,8 +3,10 @@ package yapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import yapper.commands.ArchiveCommand;
 import yapper.commands.ByeCommand;
@@ -25,10 +27,18 @@ import yapper.commands.UnmarkCommand;
  */
 public class Parser {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("M/d/yyyy HHmm");
+    private static final DateTimeFormatter[] FORMATTERS = new DateTimeFormatter[] {
+            DateTimeFormatter.ofPattern("M/d/yyyy HHmm"),
+            DateTimeFormatter.ofPattern("M/d/yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm"),
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
+    };
 
     /**
      * Parses the input from the input and returns the corresponding command
+     * 
      * @param input //user input as String
      */
     public static Command parse(String input) {
@@ -153,10 +163,16 @@ public class Parser {
     }
 
     private static LocalDateTime parseDate(String text) {
-        try {
-            return LocalDateTime.parse(text, FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new InvalidInputException("Time has to be formatted as: M/d/yyyy HHmm");
+        for (DateTimeFormatter formatter : FORMATTERS) {
+            try {
+                return LocalDateTime.parse(text, formatter);
+            } catch (DateTimeParseException e) {
+                continue;
+            }
         }
+        throw new InvalidInputException("Time has to be formatted as one of: "
+                + Arrays.stream(FORMATTERS)
+                        .map(DateTimeFormatter::toString)
+                        .collect(Collectors.joining(", ")));
     }
 }
