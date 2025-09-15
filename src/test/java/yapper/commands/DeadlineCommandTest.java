@@ -10,7 +10,6 @@ import yapper.Storage;
 import yapper.tasks.Deadline;
 import yapper.tasks.TaskList;
 
-
 /**
  * Represent Tester for Deadline Commands
  */
@@ -23,13 +22,10 @@ public class DeadlineCommandTest {
     public void testDeadline() {
         TaskList tasks = new TaskList();
         TaskList tasks2 = new TaskList();
-        Storage storage = new Storage("data/YapperBot.txt");
+        Storage storage = new Storage("data/YapperBot.txt", "data/Archive.txt");
         Command deadline = new DeadlineCommand("return books", LocalDateTime.of(2024, 10, 2, 8, 30, 0));
         tasks2.add(new Deadline("return books", LocalDateTime.of(2024, 10, 2, 8, 30, 0)));
         deadline.execute(tasks, storage);
-        System.out.println("TASKS");
-        System.out.println(tasks);
-        System.out.println(tasks2);
         assertEquals(tasks, tasks2);
     }
 }

@@ -38,7 +38,6 @@ public class Parser {
 
     /**
      * Parses the input from the input and returns the corresponding command
-     * 
      * @param input //user input as String
      */
     public static Command parse(String input) {
