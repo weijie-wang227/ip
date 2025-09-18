@@ -3,10 +3,8 @@ package yapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import yapper.commands.ArchiveCommand;
 import yapper.commands.ByeCommand;
@@ -169,9 +167,12 @@ public class Parser {
                 continue;
             }
         }
-        throw new InvalidInputException("Time has to be formatted as one of: "
-                + Arrays.stream(FORMATTERS)
-                        .map(DateTimeFormatter::toString)
-                        .collect(Collectors.joining(", ")));
+        throw new InvalidInputException("Time has to be formatted as one of these patterns: \n"
+                + "M/d/yyyy HHmm\n"
+                + "M/d/yyyy HH:mm\n"
+                + "yyyy-MM-dd HHmm\n"
+                + "yyyy-MM-dd HH:mm\n"
+                + "dd-MM-yyyy HHmm\n"
+                + "dd-MM-yyyy HH:mm");
     }
 }
