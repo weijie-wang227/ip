@@ -32,13 +32,14 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /** Injects the YapperBot instance */
     public void setYapper(YapperBot y) {
         yapperBot = y;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing
+     * YapperBote's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
@@ -47,8 +48,7 @@ public class MainWindow extends AnchorPane {
         String response = yapperBot.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getYapperDialog(response, yapperImage)
-        );
+                DialogBox.getYapperDialog(response, yapperImage));
         userInput.clear();
     }
 }

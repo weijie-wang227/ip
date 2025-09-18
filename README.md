@@ -1,26 +1,165 @@
-# Duke project template
+# YapperBot User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Welcome to **YapperBot** — your friendly chatbot for managing tasks right from the command line.
+This guide explains all available commands, input formats, and examples.
 
-## Setting up in Intellij
+---
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## 📌 Basic Commands
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+### 1. `list`
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+Show all current tasks.
+
+```bash
+list
+```
+
+---
+
+### 2. `bye`
+
+Exit the program.
+
+```bash
+bye
+```
+
+---
+
+### 3. `archive`
+
+Archive completed tasks.
+
+```bash
+archive
+```
+
+---
+
+### 4. `load`
+
+Load archived tasks back into the task list.
+
+```bash
+load
+```
+
+---
+
+## ✅ Task Management
+
+### 5. `todo <description>`
+
+Add a simple todo task.
+
+```bash
+todo read CS2103T notes
+```
+
+---
+
+### 6. `deadline <description> /by <date>`
+
+Add a task with a deadline.
+
+**Accepted date formats:**
+
+- `M/d/yyyy HHmm` → `9/18/2025 2359`
+- `M/d/yyyy HH:mm` → `9/18/2025 23:59`
+- `yyyy-MM-dd HHmm` → `2025-09-18 2359`
+- `yyyy-MM-dd HH:mm` → `2025-09-18 23:59`
+- `dd-MM-yyyy HHmm` → `18-09-2025 2359`
+- `dd-MM-yyyy HH:mm` → `18-09-2025 23:59`
+
+```bash
+deadline CS2103T iP /by 2025-09-18 23:59
+```
+
+---
+
+### 7. `event <description> /from <start> /to <end>`
+
+Add an event with a start and end date.
+
+```bash
+event project meeting /from 2025-09-18 14:00 /to 2025-09-18 16:00
+```
+
+---
+
+### 8. `delete <index>`
+
+Delete a task by its index (from `list`).
+
+```bash
+delete 2
+```
+
+---
+
+### 9. `mark <index>`
+
+Mark a task as **done**.
+
+```bash
+mark 3
+```
+
+---
+
+### 10. `unmark <index>`
+
+Mark a task as **not done**.
+
+```bash
+unmark 3
+```
+
+---
+
+## 🔎 Search & Time
+
+### 11. `find <keyword>`
+
+Find tasks that contain the given keyword.
+
+```bash
+find project
+```
+
+---
+
+### 12. `time <date>`
+
+Show tasks scheduled on a given date.
+
+```bash
+time 2025-09-18 23:59
+```
+
+---
+
+## ⚠️ Error Handling
+
+- Missing description or index → YapperBot reminds you with a helpful message.
+- Invalid date format → You’ll get a list of accepted formats.
+- Example:
+
+```bash
+deadline homework /by tomorrow
+```
+
+❌ Output:
+
+```
+OOPS!!! Time has to be formatted as one of: M/d/yyyy HHmm, M/d/yyyy HH:mm, yyyy-MM-dd HHmm, yyyy-MM-dd HH:mm, dd-MM-yyyy HHmm, dd-MM-yyyy HH:mm
+```
+
+---
+
+## 📝 Tips
+
+- Indexes start from **1** in the `list` view.
+- Dates must include both **date and time** (e.g., `2025-09-18 23:59`).
+- Always separate date fields with `/by`, `/from`, `/to`.

@@ -29,6 +29,8 @@ public class Main extends Application {
             assert ap != null : "FXML loading failed: AnchorPane is null";
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+
+            stage.setTitle("YapperBot");
             fxmlLoader.<MainWindow>getController().setYapper(yapperBot);
             stage.show();
         } catch (IOException e) {
